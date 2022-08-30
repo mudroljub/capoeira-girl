@@ -1,23 +1,28 @@
 import * as THREE from 'three'
 import {
-  scene, renderer, camera, clock, addUIControls, initLights, createGround, sample, loadFbx, loadFbxAnimations
-} from './src/utils.js'
-import { kachujinAnimations, kachujinKeys } from './src/data.js'
-import StateMachine from './src/StateMachine.js'
-import keyboard from './src/Keyboard.js'
+  camera, renderer, addUI, createSun, createGround, sample, loadFbx, loadFbxAnimations
+} from './utils.js'
+import keyboard from './keyboard.js'
+import StateMachine from './StateMachine.js'
+import { kachujinAnimations, kachujinKeys } from './data.js'
 
-const moveName = document.getElementById('move')
+const scene = new THREE.Scene()
+const clock = new THREE.Clock()
+
+const title = document.getElementById('title')
 const toggleBtn = document.getElementById('checkbox')
 
 let stateMachine, lastKey, lastTime = 0
 let autoplay = toggleBtn.checked = true
 
-const light = initLights({ scene })
+const sun = createSun()
+scene.add(sun)
+
 camera.position.set(0, 1, 3)
 
 scene.add(createGround({ size: 100, color: 0xF2D16B }))
 
-addUIControls({ commands: kachujinKeys, title: '' })
+addUI({ commands: kachujinKeys, title: '' })
 
 const { mesh } = await loadFbx({ file: 'assets/kachujin/Kachujin.fbx', axis: [0, 1, 0], angle: Math.PI })
 
@@ -25,12 +30,12 @@ scene.add(mesh)
 
 /* FUNCTIONS */
 
-const pressKey = async (key, now, simulateKey = false) => {
+const pressKey = async(key, now, simulateKey = false) => {
   if (stateMachine.currentState.name !== 'idle') return
 
   lastTime = now
   lastKey = key
-  moveName.innerHTML = kachujinKeys[key]
+  title.innerHTML = kachujinKeys[key]
 
   if (simulateKey) setTimeout(() => {
     keyboard.pressed[key] = true
@@ -38,7 +43,7 @@ const pressKey = async (key, now, simulateKey = false) => {
   }, 500)
 
   setTimeout(() => {
-    moveName.innerHTML = ''
+    title.innerHTML = ''
   }, 2500)
 
   await navigator.wakeLock?.request('screen')
@@ -70,8 +75,8 @@ toggleBtn.addEventListener('click', () => {
 })
 
 document.getElementById('camera').addEventListener('click', () => {
-  light.position.z = -light.position.z
-  camera.position.z = light.position.z < 0 ? -4.5 : 3
+  sun.position.z = -sun.position.z
+  camera.position.z = sun.position.z < 0 ? -4.5 : 3
   camera.lookAt(new THREE.Vector3(0, camera.position.y, 0))
 })
 

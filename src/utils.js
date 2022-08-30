@@ -1,9 +1,6 @@
 import * as THREE from 'three'
 import { FBXLoader } from 'https://unpkg.com/three@0.134.0/examples/jsm/loaders/FBXLoader.js'
 
-export const clock = new THREE.Clock()
-export const scene = new THREE.Scene()
-
 /* CAMERA */
 
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
@@ -30,7 +27,7 @@ renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
 
 /* UI */
 
-export function addUIControls({ commands = {}, title = 'COMMANDS' } = {}) {
+export function addUI({ commands = {}, title = 'COMMANDS' } = {}) {
   const translateKey = key => {
     key = key.replace(/Key/, '') // eslint-disable-line no-param-reassign
     switch (key) {
@@ -75,7 +72,7 @@ export function addUIControls({ commands = {}, title = 'COMMANDS' } = {}) {
 
 /* LIGHTS */
 
-export function initLights({ scene, position = [-10, 30, 40], r = 1 } = {}) {
+export function createSun({ position = [-10, 30, 40], r = 1 } = {}) {
   const spotLight = new THREE.SpotLight(0xffffff)
   spotLight.shadow.mapSize.width = 2048
   spotLight.shadow.mapSize.height = 2048
@@ -92,7 +89,6 @@ export function initLights({ scene, position = [-10, 30, 40], r = 1 } = {}) {
   )
   container.add(spotLight, ambientLight)
   container.position.set(...position)
-  scene.add(container)
   return container
 }
 
