@@ -31,7 +31,7 @@ scene.add(mesh)
 /* FUNCTIONS */
 
 const pressKey = async(key, now, simulateKey = false) => {
-  if (stateMachine.currentState.name !== 'idle') return
+  if (stateMachine?.currentState.name !== 'idle') return
 
   lastTime = now
   lastKey = key
