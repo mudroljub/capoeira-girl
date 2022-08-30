@@ -86,3 +86,4 @@ const animations = await loadFbxAnimations(kachujinAnimations, 'assets/kachujin/
 stateMachine = new StateMachine({ mesh, animations, animKeys: kachujinKeys })
 
 document.getElementById('preloader').style.display = 'none'
+title.innerHTML = ''
