@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Learn Capoeira</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <style>
+    body {
+      background: #87CEEB;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #move {
+      color: white;
+      font-size: 50px;
+      left: 0;
+      margin-top: 5%;
+      position: absolute;
+      right: 0;
+      text-align: center;
+    }
+
+    #switch {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      position: absolute;
+      right: 8px;
+      top: 4px;
+    }
+
+    #checkbox {
+      height: 14px;
+      width: 14px;
+    }
+
+    #camera {
+      background: transparent;
+      bottom: 8px;
+      cursor: pointer;
+      font-size: 22px;
+      position: absolute;
+      right: 8px;
+    }
+
+    #preloader {
+      position: absolute;
+      top: 200px;
+      left: 50%;
+      margin-left: -50px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1 id="move"></h1>
+
+  <img id="preloader" src="assets/loading.gif">
+
+  <label id="switch"><input id="checkbox" type="checkbox"> Random moves</label>
+
+  <button id="camera">📷</button>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.134.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script src="./main.js" type="module">
+  </script>
+</body>
+
+</html>
