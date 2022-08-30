@@ -27,7 +27,7 @@ renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
 
 /* UI */
 
-export function addUI({ commands = {}, title = 'COMMANDS' } = {}) {
+export function addUI({ commands } = {}) {
   const translateKey = key => {
     key = key.replace(/Key/, '') // eslint-disable-line no-param-reassign
     switch (key) {
@@ -65,14 +65,14 @@ export function addUI({ commands = {}, title = 'COMMANDS' } = {}) {
   div.style = divStyle
   div.innerHTML = Object.keys(commands).reduce(
     (acc, key) => acc + `<p style="${rowStyle}"><b style="${btnStyle}">${translateKey(key)}</b> ${commands[key]}</p>`,
-    `<h3 style="${rowStyle}">${title}</h2>`
+    ''
   )
   document.body.appendChild(div)
 }
 
 /* LIGHTS */
 
-export function createSun({ position = [-10, 30, 40], r = 1 } = {}) {
+export function createSun({ position = [25, 30, 40], r = 1 } = {}) {
   const spotLight = new THREE.SpotLight(0xffffff)
   spotLight.shadow.mapSize.width = 2048
   spotLight.shadow.mapSize.height = 2048
