@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import {
   camera, renderer, addUI, createSun, createGround, sample, loadFbx, loadFbxAnimations
 } from './utils.js'
-import keyboard from './keyboard.js'
+import keyboard from './keyboard-manager.js'
 import StateMachine from './StateMachine.js'
 import { kachujinAnimations, kachujinKeys } from './data.js'
 
