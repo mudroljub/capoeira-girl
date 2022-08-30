@@ -27,8 +27,9 @@ minimum-scale=1.0; maximum-scale=1.0" />
       align-items: center;
       cursor: pointer;
       display: flex;
+      left: 50%;
+      margin-left: -50px;
       position: absolute;
-      right: 8px;
       top: 4px;
     }
 
@@ -37,11 +38,21 @@ minimum-scale=1.0; maximum-scale=1.0" />
       width: 14px;
     }
 
+    #fullscreen {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+    }
+
+    #fullscreen,
     #camera {
       background: transparent;
-      bottom: 8px;
-      cursor: pointer;
       font-size: 22px;
+      cursor: pointer;
+    }
+
+    #camera {
+      bottom: 8px;
       position: absolute;
       right: 8px;
     }
@@ -60,6 +71,8 @@ minimum-scale=1.0; maximum-scale=1.0" />
   <h1 id="title">Learn Capoeira</h1>
 
   <img id="preloader" src="assets/loading.gif">
+
+  <button id="fullscreen">⤧</button>
 
   <label id="switch"><input id="checkbox" type="checkbox"> Random moves</label>
 

@@ -80,6 +80,13 @@ document.getElementById('camera').addEventListener('click', () => {
   camera.lookAt(new THREE.Vector3(0, camera.position.y, 0))
 })
 
+document.getElementById('fullscreen').addEventListener('click', () => {
+  if (!document.fullscreenElement)
+    document.documentElement.requestFullscreen()
+  else if (document.exitFullscreen)
+    document.exitFullscreen()
+})
+
 /* LATE LOAD */
 
 const animations = await loadFbxAnimations(kachujinAnimations, 'assets/fbx/')
