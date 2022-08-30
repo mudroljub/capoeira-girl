@@ -1,9 +1,10 @@
 import * as THREE from 'three'
-
-import { scene, renderer, camera, clock, addUIControls, initLights, createGround, sample, loadFbx, loadFbxAnimations } from './utils.js'
-import { kachujinAnimations, kachujinKeys } from './data.js'
-import StateMachine from './fsm/StateMachine.js'
-import keyboard from './Keyboard.js'
+import {
+  scene, renderer, camera, clock, addUIControls, initLights, createGround, sample, loadFbx, loadFbxAnimations
+} from './src/utils.js'
+import { kachujinAnimations, kachujinKeys } from './src/data.js'
+import StateMachine from './src/StateMachine.js'
+import keyboard from './src/Keyboard.js'
 
 const moveName = document.getElementById('move')
 const toggleBtn = document.getElementById('checkbox')
@@ -24,7 +25,7 @@ scene.add(mesh)
 
 /* FUNCTIONS */
 
-const pressKey = async(key, now, simulateKey = false) => {
+const pressKey = async (key, now, simulateKey = false) => {
   if (stateMachine.currentState.name !== 'idle') return
 
   lastTime = now

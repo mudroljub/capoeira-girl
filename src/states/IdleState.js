@@ -1,6 +1,6 @@
 import State from './State.js'
-import keyboard from '../../Keyboard.js'
-import { syncFrom } from '../../utils.js'
+import keyboard from '../Keyboard.js'
+import { syncFrom } from '../utils.js'
 
 const { pressed } = keyboard
 
