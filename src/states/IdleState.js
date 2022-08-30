@@ -1,5 +1,5 @@
 import State from './State.js'
-import keyboard from '../keyboard-manager.js'
+import keyboard from '../keyboard.js'
 import { syncFrom } from '../utils.js'
 
 const { pressed } = keyboard
