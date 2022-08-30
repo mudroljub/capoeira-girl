@@ -24,7 +24,7 @@ scene.add(createGround({ size: 100, color: 0xF2D16B }))
 
 addUI({ commands: kachujinKeys, title: '' })
 
-const { mesh } = await loadFbx({ file: 'assets/kachujin/Kachujin.fbx', axis: [0, 1, 0], angle: Math.PI })
+const { mesh } = await loadFbx({ file: 'assets/fbx/Kachujin.fbx', axis: [0, 1, 0], angle: Math.PI })
 
 scene.add(mesh)
 
@@ -82,7 +82,7 @@ document.getElementById('camera').addEventListener('click', () => {
 
 /* LATE LOAD */
 
-const animations = await loadFbxAnimations(kachujinAnimations, 'assets/kachujin/')
+const animations = await loadFbxAnimations(kachujinAnimations, 'assets/fbx/')
 stateMachine = new StateMachine({ mesh, animations, animKeys: kachujinKeys })
 
 document.getElementById('preloader').style.display = 'none'
