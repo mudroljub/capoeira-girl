@@ -6,4 +6,4 @@ Play here: [mudroljub.github.io/capoeira-girl](https://mudroljub.github.io/capoe
 
 Made with love and Three.js.
 
-Credits: 3D model and animations are from www.mixamo.com
+Credits: *3D model and animations are from www.mixamo.com*
