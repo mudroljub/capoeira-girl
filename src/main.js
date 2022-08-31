@@ -4,7 +4,7 @@ import {
 } from './utils.js'
 import keyboard from './keyboard.js'
 import StateMachine from './StateMachine.js'
-import { kachujinAnimations, kachujinKeys } from './data.js'
+import { kachujinKeys } from './data.js'
 
 const scene = new THREE.Scene()
 const clock = new THREE.Clock()

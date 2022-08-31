@@ -1,36 +1,4 @@
-// {state name : file name}
-export const kachujinAnimations = {
-  idle: 'Ginga',
-  'Armada To Esquiva': 'Armada To Esquiva',
-  'Armada': 'Armada',
-  'Au To Role': 'Au To Role',
-  'Au': 'Au',
-  'Backflip': 'Backflip',
-  'Bencao': 'Bencao',
-  'Chapa Giratoria Back': 'Chapa Giratoria Back',
-  'Chapa Giratoria': 'Chapa Giratoria',
-  'Chapa': 'Chapa',
-  'Chapaeu De Couro': 'Chapaeu De Couro',
-  'Cocorinha': 'Cocorinha',
-  'Esquiva Baixa': 'Esquiva Baixa',
-  'Esquiva Lateral': 'Esquiva Lateral',
-  'Macaco Lateral': 'Macaco Lateral',
-  'Macaco': 'Macaco',
-  'Martelo Do Chau Double': 'Martelo Do Chau Double',
-  'Martelo Do Chau Sem Mao': 'Martelo Do Chau Sem Mao',
-  'Martelo Do Chau': 'Martelo Do Chau',
-  'Martelo': 'Martelo',
-  'Meia Lua De Compasso Back': 'Meia Lua De Compasso Back',
-  'Meia Lua De Compasso': 'Meia Lua De Compasso',
-  'Meia Lua De Frente': 'Meia Lua De Frente',
-  'Passo A Frente': 'Passo A Frente',
-  'Ponteira': 'Ponteira',
-  'Queshada': 'Queshada',
-  'Rasteira': 'Rasteira',
-  'Troca': 'Troca',
-}
-
-// {keycode : state name}
+// {keycode : animation name}
 export const kachujinKeys = {
   KeyA: 'Armada',
   KeyB: 'Bencao',
