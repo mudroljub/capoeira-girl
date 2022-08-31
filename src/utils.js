@@ -43,23 +43,23 @@ const sortForMobile = commands => {
   return [...firstArr, ...secondArr]
 }
 
-export function addUI({ commands, pressKey } = {}) {
-  const translateKey = key => {
-    key = key.replace(/Key/, '') // eslint-disable-line no-param-reassign
-    switch (key) {
-      case 'ArrowLeft':
-        return '←'
-      case 'ArrowRight':
-        return '→'
-      case 'ArrowUp':
-        return '↑'
-      case 'ArrowDown':
-        return '↓'
-      default:
-        return key
-    }
+const translateKey = key => {
+  key = key.replace(/Key/, '') // eslint-disable-line no-param-reassign
+  switch (key) {
+    case 'ArrowLeft':
+      return '←'
+    case 'ArrowRight':
+      return '→'
+    case 'ArrowUp':
+      return '↑'
+    case 'ArrowDown':
+      return '↓'
+    default:
+      return key
   }
+}
 
+export function addUI({ commands, pressKey } = {}) {
   const containerStyle = `
     color: #fff;
     left: 4px;
@@ -102,7 +102,7 @@ export function addUI({ commands, pressKey } = {}) {
   document.body.appendChild(div)
 }
 
-/* LIGHTS */
+/* SUN */
 
 export function createSun({ position = [25, 30, 40], r = 1 } = {}) {
   const spotLight = new THREE.SpotLight(0xffffff)

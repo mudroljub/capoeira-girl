@@ -13,23 +13,21 @@ minimum-scale=1.0, maximum-scale=1.0" />
       overflow: hidden;
     }
 
-    * {
-      scrollbar-width: thin;
-    }
-
-    *::-webkit-scrollbar {
-      width: 12px;
-    }
-
-    *::-webkit-scrollbar-thumb {
-      border-radius: 20px;
-    }
-
     button {
       background: transparent;
       cursor: pointer;
       color: #fff;
       border-color: transparent;
+    }
+
+    @media (hover: hover) {
+      *::-webkit-scrollbar {
+        width: 2px;
+      }
+
+      * {
+        scrollbar-width: thin;
+      }
     }
 
     @media (hover: none) {
@@ -74,6 +72,7 @@ minimum-scale=1.0, maximum-scale=1.0" />
     #camera {
       font-size: 22px;
       line-height: 22px;
+      border: none;
     }
 
     #camera {
