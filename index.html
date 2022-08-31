@@ -15,9 +15,9 @@ minimum-scale=1.0, maximum-scale=1.0" />
 
     button {
       background: transparent;
-      cursor: pointer;
-      color: #fff;
       border-color: transparent;
+      color: #fff;
+      cursor: pointer;
     }
 
     @media (hover: hover) {
@@ -48,12 +48,12 @@ minimum-scale=1.0, maximum-scale=1.0" />
 
     #switch {
       align-items: center;
+      bottom: 4px;
       cursor: pointer;
       display: flex;
       left: 50%;
       margin-left: -50px;
       position: absolute;
-      bottom: 4px;
     }
 
     #checkbox {
@@ -61,31 +61,34 @@ minimum-scale=1.0, maximum-scale=1.0" />
       width: 14px;
     }
 
+    #fullscreen,
+    #camera {
+      border: none;
+    }
+
     #fullscreen {
+      color: #000;
+      font-size: 28px;
+      font-weight: bold;
+      line-height: 28px;
       position: absolute;
       right: 4px;
       top: 4px;
-      color: #000;
-    }
-
-    #fullscreen,
-    #camera {
-      font-size: 22px;
-      line-height: 22px;
-      border: none;
     }
 
     #camera {
       bottom: 4px;
+      font-size: 22px;
+      line-height: 22px;
       position: absolute;
       right: 4px;
     }
 
     #preloader {
-      position: absolute;
-      top: 200px;
       left: 50%;
       margin-left: -50px;
+      position: absolute;
+      top: 200px;
     }
   </style>
 </head>
