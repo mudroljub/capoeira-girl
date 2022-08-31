@@ -27,7 +27,23 @@ renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
 
 /* UI */
 
-export function addUI({ commands } = {}) {
+const isTouchDevice = () => 'ontouchstart' in window
+
+const sortForMobile = commands => {
+  const sorted = Object.keys(commands).sort((a, b) => commands[a].length - commands[b].length)
+
+  const firstArr = []
+  const secondArr = []
+  for (let i = sorted.length - 1; i >= 0; i--)
+    if (i % 2)
+      firstArr.push(sorted[i])
+    else
+      secondArr.unshift(sorted[i])
+
+  return [...firstArr, ...secondArr]
+}
+
+export function addUI({ commands, pressKey } = {}) {
   const translateKey = key => {
     key = key.replace(/Key/, '') // eslint-disable-line no-param-reassign
     switch (key) {
@@ -44,29 +60,45 @@ export function addUI({ commands } = {}) {
     }
   }
 
-  const divStyle = `
+  const containerStyle = `
     color: #fff;
-    left: 8px;
+    left: 4px;
     position: absolute;
     top: 4px;
+    overflow-y: auto;
+    max-height: 100vh;
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
   `
   const rowStyle = `
-    margin-top: 2px;
-    margin-bottom: 2px;
+    display: block;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    direction: ltr;
   `
-  const btnStyle = `
-    border:1px solid #fff;
-    padding: 1px 2px;
+  const keyStyle = `
+    border: 1px solid #fff;
+    padding: 0 2px;
     min-width: 12px;
     display: inline-block;
     text-align: center;
   `
   const div = document.createElement('div')
-  div.style = divStyle
-  div.innerHTML = Object.keys(commands).reduce(
-    (acc, key) => acc + `<p style="${rowStyle}"><b style="${btnStyle}">${translateKey(key)}</b> ${commands[key]}</p>`,
-    ''
-  )
+  div.style = containerStyle
+
+  const keys = isTouchDevice() ? sortForMobile(commands) : Object.keys(commands)
+
+  keys.forEach(key => {
+    const btn = document.createElement('button')
+    btn.style = rowStyle
+    btn.addEventListener('click', () => pressKey(key, true))
+    const keyCode = `<b style="${keyStyle}">${translateKey(key)}</b>`
+    btn.innerHTML = `<span>${isTouchDevice() ? '' : keyCode} ${commands[key]}</span>`
+    div.appendChild(btn)
+  })
+
   document.body.appendChild(div)
 }
 

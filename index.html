@@ -4,21 +4,45 @@
 <head>
   <title>Learn Capoeira</title>
   <meta name="description" content="Learn Capoeira moves with Capoeira girl">
-  <meta name="viewport" content="initial-scale=1.0; user-scalable=0;
-minimum-scale=1.0; maximum-scale=1.0" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=0,
+minimum-scale=1.0, maximum-scale=1.0" />
   <style>
     body {
       background: #87CEEB;
-      /* background-image: linear-gradient(#83EAF1, #adc3e2); */
       margin: 0;
       overflow: hidden;
     }
 
+    * {
+      scrollbar-width: thin;
+    }
+
+    *::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      border-radius: 20px;
+    }
+
+    button {
+      background: transparent;
+      cursor: pointer;
+      color: #fff;
+      border-color: transparent;
+    }
+
+    @media (hover: none) {
+      button {
+        border-color: #fff;
+      }
+    }
+
     #title {
       color: white;
-      font-size: 50px;
+      font-size: 5vw;
       left: 0;
-      margin-top: 5%;
+      margin-top: 3%;
       position: absolute;
       right: 0;
       text-align: center;
@@ -41,21 +65,21 @@ minimum-scale=1.0; maximum-scale=1.0" />
 
     #fullscreen {
       position: absolute;
-      right: 8px;
-      top: 8px;
+      right: 4px;
+      top: 4px;
+      color: #000;
     }
 
     #fullscreen,
     #camera {
-      background: transparent;
       font-size: 22px;
-      cursor: pointer;
+      line-height: 22px;
     }
 
     #camera {
-      bottom: 8px;
+      bottom: 4px;
       position: absolute;
-      right: 8px;
+      right: 4px;
     }
 
     #preloader {

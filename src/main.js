@@ -12,7 +12,7 @@ const clock = new THREE.Clock()
 const title = document.getElementById('title')
 const toggleBtn = document.getElementById('checkbox')
 
-let stateMachine, lastKey, lastTime = 0
+let stateMachine, lastKey, time = 0, lastTime = 0
 let autoplay = toggleBtn.checked = true
 
 const sun = createSun()
@@ -22,7 +22,7 @@ camera.position.set(0, 1, 3)
 
 scene.add(createGround({ size: 100, color: 0xF2D16B }))
 
-addUI({ commands: kachujinKeys, title: '' })
+addUI({ commands: kachujinKeys, pressKey })
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/Kachujin.fbx', axis: [0, 1, 0], angle: Math.PI })
 
@@ -30,10 +30,10 @@ scene.add(mesh)
 
 /* FUNCTIONS */
 
-const pressKey = async(key, now, simulateKey = false) => {
+async function pressKey(key, simulateKey = false) {
   if (stateMachine?.currentState.name !== 'idle') return
 
-  lastTime = now
+  lastTime = time
   lastKey = key
   title.innerHTML = kachujinKeys[key]
 
@@ -51,17 +51,18 @@ const pressKey = async(key, now, simulateKey = false) => {
 
 /* LOOP */
 
-void function loop(now) {
+void function loop() {
   requestAnimationFrame(loop)
   const delta = clock.getDelta()
+  time++
 
   const key = Object.keys(keyboard.pressed)[0]
 
   if (kachujinKeys[key])
-    pressKey(key, now)
-  else if (now - lastTime >= 7500)
-    if (autoplay) pressKey(sample(Object.keys(kachujinKeys)), now, true)
-    else if (lastKey) pressKey(lastKey, now, true)
+    pressKey(key)
+  else if (time - lastTime >= 60 * 8)
+    if (autoplay) pressKey(sample(Object.keys(kachujinKeys)), true)
+    else if (lastKey) pressKey(lastKey, true)
 
   stateMachine?.update(delta)
   renderer.render(scene, camera)
