@@ -23,7 +23,6 @@ export default class StateMachine {
 
   addAnimation(clip) {
     this.actions[clip.name] = this.mixer.clipAction(clip)
-    console.log(this.actions)
   }
 
   setState(name) {
