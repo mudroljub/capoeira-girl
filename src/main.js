@@ -12,7 +12,7 @@ const clock = new THREE.Clock()
 const title = document.getElementById('title')
 const toggleBtn = document.getElementById('checkbox')
 
-let stateMachine, lastKey, time = 0, lastTime = 0
+let lastKey, time = 0, lastTime = 0, loading = false
 let autoplay = toggleBtn.checked = true
 
 const sun = createSun()
@@ -25,22 +25,36 @@ scene.add(createGround({ size: 100, color: 0xF2D16B }))
 addUI({ commands: kachujinKeys, pressKey })
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/Kachujin.fbx', axis: [0, 1, 0], angle: Math.PI })
+const animations = await loadFbxAnimations({ idle: 'Ginga' })
+const stateMachine = new StateMachine({ mesh, animations, animKeys: kachujinKeys })
 
 scene.add(mesh)
 
 /* FUNCTIONS */
 
-async function pressKey(key, simulateKey = false) {
+async function loadAnim(key) {
+  if (loading) return
+  loading = true
+  const animation = await loadFbxAnimations([kachujinKeys[key]])
+  stateMachine.addAnimation(animation[0])
+  loading = false
+  pressKey(key)
+}
+
+async function pressKey(key) {
   if (stateMachine?.currentState.name !== 'idle') return
 
   lastTime = time
   lastKey = key
   title.innerHTML = kachujinKeys[key]
 
-  if (simulateKey) setTimeout(() => {
-    keyboard.pressed[key] = true
-    setTimeout(() => keyboard.reset(), 100)
-  }, 500)
+  if (!stateMachine.actions[kachujinKeys[key]]) {
+    loadAnim(key)
+    return
+  }
+
+  keyboard.pressed[key] = true
+  setTimeout(() => keyboard.reset(), 100)
 
   setTimeout(() => {
     title.innerHTML = ''
@@ -61,8 +75,8 @@ void function loop() {
   if (kachujinKeys[key])
     pressKey(key)
   else if (time - lastTime >= 60 * 8)
-    if (autoplay) pressKey(sample(Object.keys(kachujinKeys)), true)
-    else if (lastKey) pressKey(lastKey, true)
+    if (autoplay) pressKey(sample(Object.keys(kachujinKeys)))
+    else if (lastKey) pressKey(lastKey)
 
   stateMachine?.update(delta)
   renderer.render(scene, camera)
@@ -89,9 +103,6 @@ document.getElementById('fullscreen').addEventListener('click', () => {
 })
 
 /* LATE LOAD */
-
-const animations = await loadFbxAnimations(kachujinAnimations, 'assets/fbx/')
-stateMachine = new StateMachine({ mesh, animations, animKeys: kachujinKeys })
 
 document.getElementById('preloader').style.display = 'none'
 title.innerHTML = ''

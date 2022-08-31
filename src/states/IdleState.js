@@ -9,18 +9,12 @@ export default class IdleState extends State {
     const curAction = this.actions.idle
     if (oldState) {
       const oldAction = this.actions[oldState.name]
-      syncFrom(['walk', 'run', 'walkBackward'], oldState, oldAction, curAction)
+      syncFrom(['walk', 'run'], oldState, oldAction, curAction)
     }
     curAction.play()
   }
 
   update() {
-    if (this.actions.walk && pressed.KeyW)
-      this.fsm.setState('walk')
-
-    if (this.actions.walkBackward && pressed.KeyS)
-      this.fsm.setState('walkBackward')
-
     if (this.actions.jump && keyboard.pressed.Space)
       this.fsm.setState('jump')
 
@@ -30,8 +24,8 @@ export default class IdleState extends State {
     if (this.actions.special && keyboard.pressed.ControlLeft)
       this.fsm.setState('special')
 
-    if (this.fsm.animKeys)
-      for (const key in this.fsm.animKeys)
-        if (pressed[key]) this.fsm.setState(this.fsm.animKeys[key])
+    for (const key in this.fsm.animKeys)
+      if (pressed[key] && this.actions[this.fsm.animKeys[key]])
+        this.fsm.setState(this.fsm.animKeys[key])
   }
 }

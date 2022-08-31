@@ -93,7 +93,7 @@ export function addUI({ commands, pressKey } = {}) {
   keys.forEach(key => {
     const btn = document.createElement('button')
     btn.style = rowStyle
-    btn.addEventListener('click', () => pressKey(key, true))
+    btn.addEventListener('click', () => pressKey(key))
     const keyCode = `<b style="${keyStyle}">${translateKey(key)}</b>`
     btn.innerHTML = `<span>${isTouchDevice() ? '' : keyCode} ${commands[key]}</span>`
     div.appendChild(btn)
@@ -191,16 +191,14 @@ export async function loadFbx(params) {
   return prepareMesh({ model, animations: model.animations, ...params })
 }
 
-export async function loadFbxAnimations(names, prefix = '') {
+export async function loadFbxAnimations(names, prefix = 'assets/fbx/') {
   const promises = []
 
   if (Array.isArray(names))
     for (const name of names) {
       const promise = loadFbx({ name, file: prefix + name + '.fbx' })
       promises.push(promise)
-    }
-
-  if (typeof names === 'object')
+    } else if (typeof names === 'object')
     for (const name in names) {
       const promise = loadFbx({ name, file: prefix + names[name] + '.fbx' })
       promises.push(promise)

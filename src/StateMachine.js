@@ -17,9 +17,13 @@ export default class StateMachine {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = animationsToActions(animations, this.mixer)
-    if (this.actions.walk) this.actions.walkBackward = this.actions.walk
     this.animKeys = animKeys
     this.setState('idle')
+  }
+
+  addAnimation(clip) {
+    this.actions[clip.name] = this.mixer.clipAction(clip)
+    console.log(this.actions)
   }
 
   setState(name) {
