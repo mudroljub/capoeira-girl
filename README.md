@@ -1,6 +1,6 @@
 # Capoeira girl
 
-Learn Capoeira moves with Capoeira girl.
+My 3D playground for learning capoeira.
 
 Play here: [mudroljub.github.io/capoeira-girl](https://mudroljub.github.io/capoeira-girl/)
 
