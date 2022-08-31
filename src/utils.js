@@ -208,18 +208,4 @@ export async function loadFbxAnimations(names, prefix = 'assets/fbx/') {
   return responses.map(res => res.animations[0])
 }
 
-export const syncFrom = (names, oldState, oldAction, curAction, duration = .75) => {
-  curAction.enabled = true
-  curAction.timeScale = 1
-  if (names.includes(oldState.name)) {
-    const ratio = curAction.getClip().duration / oldAction.getClip().duration
-    curAction.time = oldAction.time * ratio // sync legs
-  } else {
-    curAction.time = 0.0
-    curAction.setEffectiveTimeScale(1)
-    curAction.setEffectiveWeight(1)
-  }
-  curAction.crossFadeFrom(oldAction, duration, true)
-}
-
 export const sample = arr => arr[Math.floor(Math.random() * arr.length)]

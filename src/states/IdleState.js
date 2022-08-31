@@ -1,15 +1,20 @@
 import State from './State.js'
 import keyboard from '../keyboard.js'
-import { syncFrom } from '../utils.js'
 
 const { pressed } = keyboard
+const duration = .75
 
 export default class IdleState extends State {
   enter(oldState) {
     const curAction = this.actions.idle
     if (oldState) {
       const oldAction = this.actions[oldState.name]
-      syncFrom(['walk', 'run'], oldState, oldAction, curAction)
+      curAction.enabled = true
+      curAction.timeScale = 1
+      curAction.time = 0.0
+      curAction.setEffectiveTimeScale(1)
+      curAction.setEffectiveWeight(1)
+      curAction.crossFadeFrom(oldAction, duration, true)
     }
     curAction.play()
   }
