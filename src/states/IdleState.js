@@ -20,15 +20,6 @@ export default class IdleState extends State {
   }
 
   update() {
-    if (this.actions.jump && keyboard.pressed.Space)
-      this.player.setState('jump')
-
-    if (this.actions.attack && keyboard.pressed.Enter)
-      this.player.setState('attack')
-
-    if (this.actions.special && keyboard.pressed.ControlLeft)
-      this.player.setState('special')
-
     for (const key in this.player.animKeys)
       if (pressed[key] && this.actions[this.player.animKeys[key]])
         this.player.setState(this.player.animKeys[key])

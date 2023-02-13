@@ -90,7 +90,6 @@ toggleBtn.addEventListener('click', () => {
 })
 
 document.getElementById('camera').addEventListener('click', () => {
-  // sun.position.z = -sun.position.z
   camera.position.z = camera.position.z > 0 ? -4.5 : 3
   camera.lookAt(new THREE.Vector3(0, camera.position.y, 0))
 })
