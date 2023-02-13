@@ -30,7 +30,7 @@ export default class SpecialState extends State {
 
   _FinishedCallback() {
     this._Cleanup()
-    this.fsm.setState('idle')
+    this.player.setState('idle')
   }
 
   exit() {

@@ -3,7 +3,7 @@ import {
   camera, renderer, addUI, createSun, createGround, sample, loadFbx, loadFbxAnimations
 } from './utils.js'
 import keyboard from './keyboard.js'
-import StateMachine from './StateMachine.js'
+import Player from './Player.js'
 import { animKeys } from './data.js'
 
 const scene = new THREE.Scene()
@@ -26,7 +26,7 @@ addUI({ commands: animKeys, pressKey })
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 const animations = await loadFbxAnimations({ idle: 'Ginga' })
-const stateMachine = new StateMachine({ mesh, animations, animKeys })
+const stateMachine = new Player({ mesh, animations, animKeys })
 
 scene.add(mesh)
 

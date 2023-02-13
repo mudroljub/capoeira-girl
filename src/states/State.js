@@ -1,7 +1,7 @@
 export default class State {
-  constructor(fsm, name) {
-    this.fsm = fsm
-    this.actions = fsm.actions
+  constructor(player, name) {
+    this.player = player
+    this.actions = player.actions
     this.name = name
   }
 

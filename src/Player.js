@@ -12,7 +12,7 @@ export const animationsToActions = (animations, mixer) => animations.reduce((dic
   [clip.name]: mixer.clipAction(clip)
 }), {})
 
-export default class StateMachine {
+export default class Player {
   constructor({ mesh, animations, animKeys }) {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
