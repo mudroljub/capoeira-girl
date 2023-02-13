@@ -1,7 +1,5 @@
 import State from './State.js'
-import keyboard from '../keyboard.js'
 
-const { pressed } = keyboard
 const duration = .75
 
 export default class IdleState extends State {
@@ -20,8 +18,8 @@ export default class IdleState extends State {
   }
 
   update() {
-    for (const key in this.player.animKeys)
-      if (pressed[key] && this.actions[this.player.animKeys[key]])
-        this.player.setState(this.player.animKeys[key])
+    // for (const key in this.player.animKeys)
+    //   if (pressed[key] && this.actions[this.player.animKeys[key]])
+    //     this.player.setState(this.player.animKeys[key])
   }
 }

@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import {
   camera, renderer, addUI, createSun, createGround, sample, loadFbx, loadFbxAnimations
 } from './utils.js'
-import keyboard from './keyboard.js'
 import Player from './Player.js'
 import { animKeys } from './data.js'
 
@@ -22,30 +21,31 @@ camera.position.set(0, 1, 3)
 
 scene.add(createGround({ size: 100, color: 0xF2D16B }))
 
-addUI({ commands: animKeys, pressKey })
+addUI({ commands: animKeys, playAnim })
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 const animations = await loadFbxAnimations({ idle: 'Ginga' })
-const stateMachine = new Player({ mesh, animations, animKeys })
+const player = new Player({ mesh, animations, animKeys })
 
 scene.add(mesh)
 
 /* FUNCTIONS */
 
-async function pressKey(key) {
-  if (stateMachine?.currentState.name !== 'idle') return
+// TODO: setState(name) on click
+
+async function playAnim(name) {
+  if (player?.currentState.name !== 'idle') return
 
   lastTime = time
-  lastKey = key
-  title.innerHTML = animKeys[key]
+  lastKey = name
+  title.innerHTML = name
 
-  if (!stateMachine.actions[animKeys[key]]) {
-    loadAnim(key)
+  if (!player.actions[name]) {
+    loadAnim(name)
     return
   }
 
-  keyboard.pressed[key] = true
-  setTimeout(() => keyboard.reset(), 100)
+  player.setState(name)
 
   setTimeout(() => {
     title.innerHTML = ''
@@ -54,13 +54,13 @@ async function pressKey(key) {
   await navigator.wakeLock?.request('screen')
 }
 
-async function loadAnim(key) {
+async function loadAnim(name) {
   if (loading) return
   loading = true
-  const animation = await loadFbxAnimations([animKeys[key]])
-  stateMachine.addAnimation(animation[0])
+  const animation = await loadFbxAnimations([name])
+  player.addAnimation(animation[0])
   loading = false
-  pressKey(key)
+  playAnim(name)
 }
 
 /* LOOP */
@@ -70,15 +70,15 @@ void function loop() {
   const delta = clock.getDelta()
   time++
 
-  const key = Object.keys(keyboard.pressed)[0]
+  const name = 'Prd' //
 
-  if (animKeys[key])
-    pressKey(key)
+  if (animKeys[name]) // if includes
+    playAnim(name)
   else if (time - lastTime >= 60 * 8) // TODO: refactor to frame indepentent
-    if (autoplay) pressKey(sample(Object.keys(animKeys)))
-    else if (lastKey) pressKey(lastKey)
+    if (autoplay) playAnim(sample(Object.keys(animKeys)))
+    else if (lastKey) playAnim(lastKey)
 
-  stateMachine?.update(delta)
+  player?.update(delta)
   renderer.render(scene, camera)
 }()
 

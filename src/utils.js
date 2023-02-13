@@ -13,7 +13,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.domElement.focus()
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap
-// fix fbx model light
+// fix lights
 renderer.gammaFactor = 2.2
 renderer.outputEncoding = THREE.GammaEncoding
 
@@ -27,39 +27,7 @@ renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
 
 /* UI */
 
-const isTouchDevice = () => 'ontouchstart' in window
-
-const sortForMobile = commands => {
-  const sorted = Object.keys(commands).sort((a, b) => commands[a].length - commands[b].length)
-
-  const firstArr = []
-  const secondArr = []
-  for (let i = sorted.length - 1; i >= 0; i--)
-    if (i % 2)
-      firstArr.push(sorted[i])
-    else
-      secondArr.unshift(sorted[i])
-
-  return [...firstArr, ...secondArr]
-}
-
-const translateKey = key => {
-  key = key.replace(/Key/, '') // eslint-disable-line no-param-reassign
-  switch (key) {
-    case 'ArrowLeft':
-      return '←'
-    case 'ArrowRight':
-      return '→'
-    case 'ArrowUp':
-      return '↑'
-    case 'ArrowDown':
-      return '↓'
-    default:
-      return key
-  }
-}
-
-export function addUI({ commands, pressKey } = {}) {
+export function addUI({ commands, playAnim } = {}) {
   const containerStyle = `
     color: #fff;
     left: 4px;
@@ -78,26 +46,18 @@ export function addUI({ commands, pressKey } = {}) {
     margin-bottom: 1px;
     direction: ltr;
   `
-  const keyStyle = `
-    border: 1px solid #fff;
-    padding: 0 2px;
-    min-width: 12px;
-    display: inline-block;
-    text-align: center;
-  `
   const div = document.createElement('div')
   div.style = containerStyle
 
-  const keys = isTouchDevice() ? sortForMobile(commands) : Object.keys(commands)
-
-  keys.forEach(key => {
+  Object.values(commands).forEach(name => {
     const btn = document.createElement('button')
     btn.style = rowStyle
 
-    btn.addEventListener('click', () => pressKey(key))
+    btn.addEventListener('click', e => {
+      playAnim(e.target.innerText)
+    })
 
-    const keyCode = `<b style="${keyStyle}">${translateKey(key)}</b>`
-    btn.innerHTML = `<span>${isTouchDevice() ? '' : keyCode} ${commands[key]}</span>`
+    btn.innerHTML = `<span>${name}</span>`
     div.appendChild(btn)
   })
 
