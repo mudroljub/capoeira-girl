@@ -1,5 +1,5 @@
 // {keycode : animation name}
-export const kachujinKeys = {
+export const animKeys = {
   KeyA: 'Armada',
   KeyB: 'Bencao',
   KeyC: 'Chapa',
