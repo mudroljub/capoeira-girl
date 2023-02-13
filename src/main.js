@@ -23,7 +23,7 @@ const clock = new THREE.Clock()
 const title = document.getElementById('title')
 const toggleBtn = document.getElementById('checkbox')
 
-let lastAnim, time = 0, lastTime = 0, loading = false
+let currentAnim = '', time = 0, lastTime = 0, loading = false
 let autoplay = toggleBtn.checked = true
 
 const sun = createSun()
@@ -36,7 +36,8 @@ scene.add(createGround({ size: 100, color: 0xF2D16B }))
 addUI({ animNames, playAnim })
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
-const animations = await loadFbxAnimations({ idle: 'Ginga' })
+const animations = await loadFbxAnimations(['Ginga'])
+
 const player = new Player({ mesh, animations })
 
 scene.add(mesh)
@@ -46,10 +47,10 @@ scene.add(mesh)
 // TODO: setState(name) on click
 
 async function playAnim(name) {
-  if (player?.currentState.name !== 'idle') return
+  if (player.currentState?.name !== 'idle') return
 
   lastTime = time
-  lastAnim = name
+  currentAnim = name
   title.innerHTML = name
 
   if (!player.actions[name]) {
@@ -88,7 +89,7 @@ void function loop() {
 
   // if (time - lastTime >= 60 * 8) // TODO: refactor to frame indepentent
   //   if (autoplay) playAnim(sample(animNames))
-  //   else if (lastAnim) playAnim(lastAnim)
+  //   else if (currentAnim) playAnim(currentAnim)
 
   player?.update(delta)
   renderer.render(scene, camera)
@@ -98,7 +99,7 @@ void function loop() {
 
 toggleBtn.addEventListener('click', () => {
   autoplay = !autoplay
-  lastAnim = null
+  currentAnim = null
 })
 
 document.getElementById('camera').addEventListener('click', () => {

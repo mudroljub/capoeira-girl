@@ -4,7 +4,7 @@ const duration = .75
 
 export default class IdleState extends State {
   enter(oldState) {
-    const curAction = this.actions.idle
+    const curAction = this.actions.Ginga
     if (oldState) {
       const oldAction = this.actions[oldState.name]
       curAction.enabled = true
