@@ -93,7 +93,9 @@ export function addUI({ commands, pressKey } = {}) {
   keys.forEach(key => {
     const btn = document.createElement('button')
     btn.style = rowStyle
+
     btn.addEventListener('click', () => pressKey(key))
+
     const keyCode = `<b style="${keyStyle}">${translateKey(key)}</b>`
     btn.innerHTML = `<span>${isTouchDevice() ? '' : keyCode} ${commands[key]}</span>`
     div.appendChild(btn)

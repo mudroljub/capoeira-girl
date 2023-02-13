@@ -32,15 +32,6 @@ scene.add(mesh)
 
 /* FUNCTIONS */
 
-async function loadAnim(key) {
-  if (loading) return
-  loading = true
-  const animation = await loadFbxAnimations([animKeys[key]])
-  stateMachine.addAnimation(animation[0])
-  loading = false
-  pressKey(key)
-}
-
 async function pressKey(key) {
   if (stateMachine?.currentState.name !== 'idle') return
 
@@ -63,6 +54,15 @@ async function pressKey(key) {
   await navigator.wakeLock?.request('screen')
 }
 
+async function loadAnim(key) {
+  if (loading) return
+  loading = true
+  const animation = await loadFbxAnimations([animKeys[key]])
+  stateMachine.addAnimation(animation[0])
+  loading = false
+  pressKey(key)
+}
+
 /* LOOP */
 
 void function loop() {
@@ -74,7 +74,7 @@ void function loop() {
 
   if (animKeys[key])
     pressKey(key)
-  else if (time - lastTime >= 60 * 8)
+  else if (time - lastTime >= 60 * 8) // TODO: refactor to frame indepentent
     if (autoplay) pressKey(sample(Object.keys(animKeys)))
     else if (lastKey) pressKey(lastKey)
 
