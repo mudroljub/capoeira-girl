@@ -13,11 +13,10 @@ export const animationsToActions = (animations, mixer) => animations.reduce((dic
 }), {})
 
 export default class Player {
-  constructor({ mesh, animations, animKeys }) {
+  constructor({ mesh, animations }) {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = animationsToActions(animations, this.mixer)
-    this.animKeys = animKeys
     this.setState('idle')
   }
 

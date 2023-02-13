@@ -16,10 +16,4 @@ export default class IdleState extends State {
     }
     curAction.play()
   }
-
-  update() {
-    // for (const key in this.player.animKeys)
-    //   if (pressed[key] && this.actions[this.player.animKeys[key]])
-    //     this.player.setState(this.player.animKeys[key])
-  }
 }

@@ -3,7 +3,19 @@ import {
   camera, renderer, addUI, createSun, createGround, sample, loadFbx, loadFbxAnimations
 } from './utils.js'
 import Player from './Player.js'
-import { animKeys } from './data.js'
+
+const animNames = [
+  'Armada', 'Bencao', 'Chapa', 'Chapaeu De Couro', 'Au', 'Chapa Giratoria',
+  'Chapa Giratoria Back', 'Meia Lua De Frente', 'Meia Lua De Compasso',
+  'Meia Lua De Compasso Back', 'Meia Lua De Compasso Double',
+  'Martelo Do Chau', 'Martelo Do Chau Sem Mao', 'Ponteira', 'Au To Role',
+  'Rasteira', // Rasteira 2
+  'Queshada', 'Troca',
+  'Martelo', // Martelo 3
+  'Macaco', 'Macaco Lateral', 'Esquiva to Role', 'Cocorinha',
+  'Esquiva Baixa', 'Esquiva Lateral', 'Armada To Esquiva', 'Backflip',
+  // Ginga Variation 1, Ginga Variation 2, Ginga Variation 3, Sequence 1
+]
 
 const scene = new THREE.Scene()
 const clock = new THREE.Clock()
@@ -11,7 +23,7 @@ const clock = new THREE.Clock()
 const title = document.getElementById('title')
 const toggleBtn = document.getElementById('checkbox')
 
-let lastKey, time = 0, lastTime = 0, loading = false
+let lastAnim, time = 0, lastTime = 0, loading = false
 let autoplay = toggleBtn.checked = true
 
 const sun = createSun()
@@ -21,11 +33,11 @@ camera.position.set(0, 1, 3)
 
 scene.add(createGround({ size: 100, color: 0xF2D16B }))
 
-addUI({ commands: animKeys, playAnim })
+addUI({ animNames, playAnim })
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 const animations = await loadFbxAnimations({ idle: 'Ginga' })
-const player = new Player({ mesh, animations, animKeys })
+const player = new Player({ mesh, animations })
 
 scene.add(mesh)
 
@@ -37,7 +49,7 @@ async function playAnim(name) {
   if (player?.currentState.name !== 'idle') return
 
   lastTime = time
-  lastKey = name
+  lastAnim = name
   title.innerHTML = name
 
   if (!player.actions[name]) {
@@ -70,13 +82,13 @@ void function loop() {
   const delta = clock.getDelta()
   time++
 
-  const name = 'Prd' //
+  // if (animNames.includes(name))
+  //   playAnim(name)
+  // else
 
-  if (animKeys[name]) // if includes
-    playAnim(name)
-  else if (time - lastTime >= 60 * 8) // TODO: refactor to frame indepentent
-    if (autoplay) playAnim(sample(Object.keys(animKeys)))
-    else if (lastKey) playAnim(lastKey)
+  // if (time - lastTime >= 60 * 8) // TODO: refactor to frame indepentent
+  //   if (autoplay) playAnim(sample(animNames))
+  //   else if (lastAnim) playAnim(lastAnim)
 
   player?.update(delta)
   renderer.render(scene, camera)
@@ -86,7 +98,7 @@ void function loop() {
 
 toggleBtn.addEventListener('click', () => {
   autoplay = !autoplay
-  lastKey = null
+  lastAnim = null
 })
 
 document.getElementById('camera').addEventListener('click', () => {

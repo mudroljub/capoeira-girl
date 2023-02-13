@@ -27,7 +27,7 @@ renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
 
 /* UI */
 
-export function addUI({ commands, playAnim } = {}) {
+export function addUI({ animNames, playAnim } = {}) {
   const containerStyle = `
     color: #fff;
     left: 4px;
@@ -49,7 +49,7 @@ export function addUI({ commands, playAnim } = {}) {
   const div = document.createElement('div')
   div.style = containerStyle
 
-  Object.values(commands).forEach(name => {
+  animNames.forEach(name => {
     const btn = document.createElement('button')
     btn.style = rowStyle
 
