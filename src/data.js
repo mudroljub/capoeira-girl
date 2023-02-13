@@ -10,22 +10,24 @@ export const animKeys = {
   KeyI: 'Meia Lua De Frente',
   KeyJ: 'Meia Lua De Compasso',
   KeyK: 'Meia Lua De Compasso Back',
-  KeyL: 'Martelo Do Chau Double',
+  KeyL: 'Meia Lua De Compasso Double',
   KeyM: 'Martelo Do Chau',
   KeyN: 'Martelo Do Chau Sem Mao',
   KeyP: 'Ponteira',
   KeyQ: 'Au To Role',
-  KeyR: 'Rasteira',
+  KeyR: 'Rasteira', // Rasteira 2
   KeyS: 'Queshada',
   KeyT: 'Troca',
-  KeyW: 'Martelo',
+  KeyW: 'Martelo', // Martelo 3
   KeyY: 'Macaco',
   KeyZ: 'Macaco Lateral',
 
-  ArrowUp: 'Passo A Frente',
+  ArrowUp: 'Esquiva to Role',
   ArrowDown: 'Cocorinha',
   ArrowLeft: 'Esquiva Baixa',
   ArrowRight: 'Esquiva Lateral',
   Enter: 'Armada To Esquiva',
   Space: 'Backflip',
+  // Ginga Variation 1, Ginga Variation 2, Ginga Variation 3
+  // Sequence 1
 }
