@@ -58,7 +58,10 @@ document.getElementById('fullscreen').addEventListener('click', () => {
 ;[...moves].forEach(btn => {
   btn.addEventListener('click', async e => {
     if (player.currentState?.name !== 'Ginga') return
+
     await player.setState(e.target.innerText)
+    last = Date.now()
+
     await navigator.wakeLock?.request('screen')
   })
 })
@@ -68,7 +71,6 @@ document.getElementById('fullscreen').addEventListener('click', () => {
     console.log(e.target.innerText)
     // TODO: ne menja stanje nego samo animaciju
   })
-
 })
 
 /* HIDE PRELOADER */
