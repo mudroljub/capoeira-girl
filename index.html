@@ -13,96 +13,108 @@ minimum-scale=1.0, maximum-scale=1.0" />
 
   <h1 id="title">Learn Capoeira</h1>
 
-  <div class="tabs">
-    <div class="tab">
-      <input type="radio" id="moves" name="rd" checked>
-      <label class="tab-label" for="moves">Sway</label>
-      <div class="tab-content">
-        <button class="ginga">Ginga</button>
-        <button class="ginga">Ginga Variation 1</button>
-        <button class="ginga">Ginga Variation 2</button>
-        <button class="ginga">Ginga Variation 3</button>
+  <div id="toggle-menu">
+
+    <input type="checkbox" id="burger-checkbox" checked />
+    <!-- burger -->
+    <span></span>
+    <span></span>
+    <span></span>
+
+    <div id="menu">
+      <div class="tabs">
+        <div class="tab">
+          <input type="radio" id="moves" name="rd" checked>
+          <label class="tab-label" for="moves">Sway</label>
+          <div class="tab-content">
+            <button class="ginga">Ginga</button>
+            <button class="ginga">Ginga Variation 1</button>
+            <button class="ginga">Ginga Variation 2</button>
+            <button class="ginga">Ginga Variation 3</button>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" id="attacks" name="rd">
+          <label class="tab-label" for="attacks">Attacks</label>
+          <div class="tab-content">
+            <button class="move">Ponteira</button>
+
+            <button class="move">Bencao</button>
+            <button class="move">Chapa</button>
+            <button class="move">Chapa Giratoria</button>
+            <button class="move">Chapa Giratoria Back</button>
+
+            <button class="move">Meia Lua De Frente</button>
+            <button class="move">Armada</button>
+            <button class="move">Queshada</button>
+
+            <button class="move">Meia Lua De Compasso</button>
+            <button class="move">Meia Lua De Compasso Back</button>
+            <button class="move">Meia Lua De Compasso Double</button>
+
+            <button class="move">Martelo</button>
+            <button class="move">Martelo 3</button>
+            <button class="move">Martelo Do Chau</button>
+            <button class="move">Martelo Do Chau Sem Mao</button>
+            <button class="move">Chapeu De Couro</button>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" id="defences" name="rd">
+          <label class="tab-label" for="defences">Defences</label>
+          <div class="tab-content">
+            <button class="move">Cocorinha</button>
+            <button class="move">Esquiva Lateral</button>
+            <button class="move">Esquiva Baixa</button>
+            <button class="move">Esquiva to Role</button>
+
+            <button class="move">Troca</button>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" id="takedowns" name="rd">
+          <label class="tab-label" for="takedowns">Takedowns</label>
+          <div class="tab-content">
+            <button class="move">Rasteira</button>
+            <button class="move">Rasteira 2</button>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" id="acrobatics" name="rd">
+          <label class="tab-label" for="acrobatics">Acrobatics</label>
+          <div class="tab-content">
+            <button class="move">Au</button>
+            <button class="move">Macaco</button>
+            <button class="move">Macaco Lateral</button>
+            <button class="move">Backflip</button>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" id="sequences" name="rd">
+          <label class="tab-label" for="sequences">Sequences</label>
+          <div class="tab-content">
+            <button class="move">Au To Role</button>
+            <button class="move">Armada To Esquiva</button>
+            <button class="move">Meia Lua De Compasso To Au de Coluna</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="tab">
-      <input type="radio" id="attacks" name="rd">
-      <label class="tab-label" for="attacks">Attacks</label>
-      <div class="tab-content">
-        <button class="move">Ponteira</button>
-
-        <button class="move">Bencao</button>
-        <button class="move">Chapa</button>
-        <button class="move">Chapa Giratoria</button>
-        <button class="move">Chapa Giratoria Back</button>
-
-        <button class="move">Meia Lua De Frente</button>
-        <button class="move">Armada</button>
-        <button class="move">Queshada</button>
-
-        <button class="move">Meia Lua De Compasso</button>
-        <button class="move">Meia Lua De Compasso Back</button>
-        <button class="move">Meia Lua De Compasso Double</button>
-
-        <button class="move">Martelo</button>
-        <button class="move">Martelo 3</button>
-        <button class="move">Martelo Do Chau</button>
-        <button class="move">Martelo Do Chau Sem Mao</button>
-        <button class="move">Chapeu De Couro</button>
-      </div>
-    </div>
-
-    <div class="tab">
-      <input type="radio" id="defences" name="rd">
-      <label class="tab-label" for="defences">Defences</label>
-      <div class="tab-content">
-        <button class="move">Cocorinha</button>
-        <button class="move">Esquiva Lateral</button>
-        <button class="move">Esquiva Baixa</button>
-        <button class="move">Esquiva to Role</button>
-
-        <button class="move">Troca</button>
-      </div>
-    </div>
-
-    <div class="tab">
-      <input type="radio" id="takedowns" name="rd">
-      <label class="tab-label" for="takedowns">Takedowns</label>
-      <div class="tab-content">
-        <button class="move">Rasteira</button>
-        <button class="move">Rasteira 2</button>
-      </div>
-    </div>
-
-    <div class="tab">
-      <input type="radio" id="acrobatics" name="rd">
-      <label class="tab-label" for="acrobatics">Acrobatics</label>
-      <div class="tab-content">
-        <button class="move">Au</button>
-        <button class="move">Macaco</button>
-        <button class="move">Macaco Lateral</button>
-        <button class="move">Backflip</button>
-      </div>
-    </div>
-
-    <div class="tab">
-      <input type="radio" id="sequences" name="rd">
-      <label class="tab-label" for="sequences">Sequences</label>
-      <div class="tab-content">
-        <button class="move">Au To Role</button>
-        <button class="move">Armada To Esquiva</button>
-        <button class="move">Meia Lua De Compasso To Au de Coluna</button>
-      </div>
-    </div>
   </div>
 
   <img id="preloader" src="assets/loading.gif">
 
-  <button id="fullscreen">⤧</button>
+  <button id="fullscreen" class="transparent">⤧</button>
 
   <label id="switch"><input id="checkbox" type="checkbox"> Random moves</label>
 
-  <button id="camera">📷</button>
+  <button id="camera" class="transparent">📷</button>
 
   <script async src="libs/es-module-shims.js"></script>
   <script type="importmap">
