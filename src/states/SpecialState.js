@@ -15,7 +15,7 @@ export default class SpecialState extends State {
     mixer.addEventListener('finished', this._FinishedCallback)
 
     if (oldState) {
-      const oldAction = this.actions[oldState.name]
+      const oldAction = oldState.currentAction
       curAction.reset()
       curAction.setLoop(THREE.LoopOnce, 1)
       curAction.clampWhenFinished = true

@@ -1,9 +1,17 @@
 import * as THREE from 'three'
 import { FBXLoader } from 'https://unpkg.com/three@0.134.0/examples/jsm/loaders/FBXLoader.js'
 
+export const scene = new THREE.Scene()
+const sun = createSun()
+scene.add(sun)
+
+scene.add(createGround({ size: 100, color: 0xF2D16B }))
+
 /* CAMERA */
 
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
+
+camera.position.set(0, 1, 3)
 
 /* RENDERER */
 

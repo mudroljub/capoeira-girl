@@ -4,16 +4,16 @@ const duration = .75
 
 export default class IdleState extends State {
   enter(oldState) {
-    const curAction = this.actions.Ginga
+    this.currentAction = this.actions.Ginga
     if (oldState) {
       const oldAction = this.actions[oldState.name]
-      curAction.enabled = true
-      curAction.timeScale = 1
-      curAction.time = 0.0
-      curAction.setEffectiveTimeScale(1)
-      curAction.setEffectiveWeight(1)
-      curAction.crossFadeFrom(oldAction, duration, true)
+      this.currentAction.enabled = true
+      this.currentAction.timeScale = 1
+      this.currentAction.time = 0.0
+      this.currentAction.setEffectiveTimeScale(1)
+      this.currentAction.setEffectiveWeight(1)
+      this.currentAction.crossFadeFrom(oldAction, duration, true)
     }
-    curAction.play()
+    this.currentAction.play()
   }
 }

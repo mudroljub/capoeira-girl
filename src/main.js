@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import {
-  camera, renderer, addUI, createSun, createGround, sample, loadFbx, loadFbxAnimations
+  scene, camera, renderer, addUI, sample, loadFbx, loadFbxAnimations
 } from './utils.js'
 import Player from './Player.js'
 
@@ -17,21 +17,16 @@ const animNames = [
   // Ginga Variation 1, Ginga Variation 2, Ginga Variation 3, Sequence 1
 ]
 
-const scene = new THREE.Scene()
 const clock = new THREE.Clock()
 
 const title = document.getElementById('title')
 const toggleBtn = document.getElementById('checkbox')
 
-let currentAnim = '', time = 0, lastTime = 0, loading = false
-let autoplay = toggleBtn.checked = true
+let last = Date.now()
+const interval = 6000 // miliseconds
 
-const sun = createSun()
-scene.add(sun)
-
-camera.position.set(0, 1, 3)
-
-scene.add(createGround({ size: 100, color: 0xF2D16B }))
+let lastAnim = ''
+let randomMoves = toggleBtn.checked = true
 
 addUI({ animNames, playAnim })
 
@@ -44,13 +39,10 @@ scene.add(mesh)
 
 /* FUNCTIONS */
 
-// TODO: setState(name) on click
-
 async function playAnim(name) {
   if (player.currentState?.name !== 'idle') return
 
-  lastTime = time
-  currentAnim = name
+  lastAnim = name
   title.innerHTML = name
 
   if (!player.actions[name]) {
@@ -68,11 +60,8 @@ async function playAnim(name) {
 }
 
 async function loadAnim(name) {
-  if (loading) return
-  loading = true
   const animation = await loadFbxAnimations([name])
   player.addAnimation(animation[0])
-  loading = false
   playAnim(name)
 }
 
@@ -81,15 +70,12 @@ async function loadAnim(name) {
 void function loop() {
   requestAnimationFrame(loop)
   const delta = clock.getDelta()
-  time++
 
-  // if (animNames.includes(name))
-  //   playAnim(name)
-  // else
-
-  // if (time - lastTime >= 60 * 8) // TODO: refactor to frame indepentent
-  //   if (autoplay) playAnim(sample(animNames))
-  //   else if (currentAnim) playAnim(currentAnim)
+  if (Date.now() - last >= interval) {
+    if (randomMoves) playAnim(sample(animNames))
+    else if (lastAnim) playAnim(lastAnim)
+    last = Date.now()
+  }
 
   player?.update(delta)
   renderer.render(scene, camera)
@@ -98,8 +84,7 @@ void function loop() {
 /* EVENTS */
 
 toggleBtn.addEventListener('click', () => {
-  autoplay = !autoplay
-  currentAnim = null
+  randomMoves = !randomMoves
 })
 
 document.getElementById('camera').addEventListener('click', () => {
