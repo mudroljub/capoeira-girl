@@ -12,7 +12,6 @@ Credits: *3D model and animations are from www.mixamo.com*
 
 ## TODO
 
-- BUG: prvi put ne pusti celu animaciju!
 - slow down animation
 - camera follow player (for Au)
 - dodati npm i three

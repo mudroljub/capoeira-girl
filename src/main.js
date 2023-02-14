@@ -60,7 +60,6 @@ document.getElementById('fullscreen').addEventListener('click', () => {
 
 ;[...moves].forEach(btn => {
   btn.addEventListener('click', async e => {
-    console.log('currentState instanceof GingaState', player.currentState instanceof GingaState)
     if (player.currentState instanceof GingaState) {
       await player.setState(e.target.innerText)
       last = Date.now()
@@ -79,3 +78,4 @@ document.getElementById('fullscreen').addEventListener('click', () => {
 /* HIDE PRELOADER */
 
 document.getElementById('preloader').style.display = 'none'
+document.getElementById('title').innerHTML = ''
