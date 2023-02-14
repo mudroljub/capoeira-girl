@@ -6,6 +6,9 @@ import SpecialState from './states/SpecialState.js'
 
 const states = {
   Ginga: GingaState,
+  'Ginga Variation 1': GingaState,
+  'Ginga Variation 2': GingaState,
+  'Ginga Variation 3': GingaState,
 }
 
 export default class Player {

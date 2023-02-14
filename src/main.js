@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { scene, camera, renderer, sample, loadFbx } from './utils.js'
 import Player from './Player.js'
+import GingaState from './states/GingaState.js'
 
 const clock = new THREE.Clock()
 
@@ -27,11 +28,11 @@ void async function loop() {
   requestAnimationFrame(loop)
   const delta = clock.getDelta()
 
-  if (Date.now() - last >= interval) {
-    if (randomMoves) await player.setState(sample(animNames))
-    else if (player.oldState?.name) await player.setState(player.oldState?.name)
-    last = Date.now()
-  }
+  // if (Date.now() - last >= interval) {
+  //   if (randomMoves) await player.setState(sample(animNames))
+  //   else if (player.oldState?.name) await player.setState(player.oldState?.name)
+  //   last = Date.now()
+  // }
 
   player.update(delta)
   renderer.render(scene, camera)
@@ -57,7 +58,7 @@ document.getElementById('fullscreen').addEventListener('click', () => {
 
 ;[...moves].forEach(btn => {
   btn.addEventListener('click', async e => {
-    if (player.currentState?.name !== 'Ginga') return
+    if (!player.currentState instanceof GingaState) return
 
     await player.setState(e.target.innerText)
     last = Date.now()
@@ -68,8 +69,7 @@ document.getElementById('fullscreen').addEventListener('click', () => {
 
 ;[...gingas].forEach(btn => {
   btn.addEventListener('click', async e => {
-    console.log(e.target.innerText)
-    // TODO: ne menja stanje nego samo animaciju
+    await player.setState(e.target.innerText)
   })
 })
 

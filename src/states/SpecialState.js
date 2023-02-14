@@ -32,7 +32,7 @@ export default class SpecialState extends State {
 
   _FinishedCallback() {
     this._Cleanup()
-    this.player.setState('Ginga')
+    this.player.setState(this.player.oldState.name)
   }
 
   exit() {

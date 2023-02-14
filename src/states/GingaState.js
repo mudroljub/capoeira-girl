@@ -4,7 +4,7 @@ const duration = .75
 
 export default class GingaState extends State {
   enter(oldState) {
-    this.currentAction = this.actions.Ginga
+    this.currentAction = this.actions[this.name]
     if (oldState) {
       const oldAction = this.actions[oldState.name]
       this.currentAction.enabled = true
