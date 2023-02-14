@@ -12,7 +12,4 @@ Credits: *3D model and animations are from www.mixamo.com*
 
 ## TODO
 
-- bug: random moves
-- slow down animation
-- camera follow player (for Au)
-- dodati npm i three
+- dodati npm three
