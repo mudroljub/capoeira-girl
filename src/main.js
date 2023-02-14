@@ -19,51 +19,19 @@ const animNames = [
 
 const clock = new THREE.Clock()
 
-const title = document.getElementById('title')
 const toggleBtn = document.getElementById('checkbox')
 
-let last = Date.now()
 const interval = 6000 // miliseconds
-
-let lastAnim = ''
+let last = Date.now()
 let randomMoves = toggleBtn.checked = true
-
-addUI({ animNames, playAnim })
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 const animations = await loadFbxAnimations(['Ginga'])
 
 const player = new Player({ mesh, animations })
-
 scene.add(mesh)
 
-/* FUNCTIONS */
-
-async function playAnim(name) {
-  if (player.currentState?.name !== 'idle') return
-
-  lastAnim = name
-  title.innerHTML = name
-
-  if (!player.actions[name]) {
-    loadAnim(name)
-    return
-  }
-
-  player.setState(name)
-
-  setTimeout(() => {
-    title.innerHTML = ''
-  }, 2500)
-
-  await navigator.wakeLock?.request('screen')
-}
-
-async function loadAnim(name) {
-  const animation = await loadFbxAnimations([name])
-  player.addAnimation(animation[0])
-  playAnim(name)
-}
+addUI({ animNames, playAnim: name => player.playAnim(name) })
 
 /* LOOP */
 
@@ -72,8 +40,8 @@ void function loop() {
   const delta = clock.getDelta()
 
   if (Date.now() - last >= interval) {
-    if (randomMoves) playAnim(sample(animNames))
-    else if (lastAnim) playAnim(lastAnim)
+    if (randomMoves) player.playAnim(sample(animNames))
+    else if (player.oldState?.name) player.playAnim(player.oldState?.name)
     last = Date.now()
   }
 
@@ -99,7 +67,6 @@ document.getElementById('fullscreen').addEventListener('click', () => {
     document.exitFullscreen()
 })
 
-/* LATE LOAD */
+/* HIDE PRELOADER */
 
 document.getElementById('preloader').style.display = 'none'
-title.innerHTML = ''

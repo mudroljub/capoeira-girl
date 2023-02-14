@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import State from './State.js'
 
 const duration = .25
+const title = document.getElementById('title')
 
 export default class SpecialState extends State {
   constructor(...args) {
@@ -10,6 +11,7 @@ export default class SpecialState extends State {
   }
 
   enter(oldState) {
+    title.innerHTML = this.name
     const curAction = this.actions[this.name]
     const mixer = curAction.getMixer()
     mixer.addEventListener('finished', this._FinishedCallback)
@@ -35,5 +37,6 @@ export default class SpecialState extends State {
 
   exit() {
     this._Cleanup()
+    title.innerHTML = ''
   }
 }

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 
+import { loadFbxAnimations } from './utils.js'
 import IdleState from './states/IdleState.js'
 import SpecialState from './states/SpecialState.js'
 
@@ -20,19 +21,38 @@ export default class Player {
     this.setState('idle')
   }
 
+  async loadAnimation(name) {
+    const animation = await loadFbxAnimations([name])
+    this.addAnimation(animation[0])
+  }
+
   addAnimation(clip) {
     this.actions[clip.name] = this.mixer.clipAction(clip)
   }
 
+  async playAnim(name) {
+    if (this.currentState?.name !== 'idle') return
+
+    if (!this.actions[name]) {
+      await this.loadAnimation(name)
+      this.playAnim(name)
+      return
+    }
+
+    this.setState(name)
+
+    await navigator.wakeLock?.request('screen')
+  }
+
   setState(name) {
-    const oldState = this.currentState
-    if (oldState) {
-      if (oldState.name == name) return
-      oldState.exit()
+    this.oldState = this.currentState
+    if (this.oldState) {
+      if (this.oldState.name == name) return
+      this.oldState.exit()
     }
     const State = states[name] || SpecialState
     this.currentState = new State(this, name)
-    this.currentState.enter(oldState)
+    this.currentState.enter(this.oldState)
   }
 
   update(delta) {
