@@ -1,6 +1,6 @@
 import State from './State.js'
 
-const duration = .75
+const duration = .2
 
 export default class GingaState extends State {
   enter(oldState) {

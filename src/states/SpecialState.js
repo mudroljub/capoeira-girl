@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import State from './State.js'
 
-const duration = .25
+const duration = .2
 const title = document.getElementById('title')
 
 export default class SpecialState extends State {
