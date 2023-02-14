@@ -12,16 +12,6 @@ button {
   background-color: transparent;
 }
 
-@media (hover: hover) {
-  *::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  * {
-    scrollbar-width: thin;
-  }
-}
-
 #title {
   color: white;
   font-size: 5vw;
@@ -219,4 +209,10 @@ input:checked~.tab-content {
 
 #burger-checkbox:checked~#menu {
   transform: none;
+}
+
+@media (min-width: 800px) {
+  #toggle-menu span {
+    display: none;
+  }
 }
