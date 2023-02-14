@@ -17,14 +17,12 @@ minimum-scale=1.0, maximum-scale=1.0" />
   <div class="tabs">
     <div class="tab">
       <input type="radio" id="moves" name="rd" checked>
-      <label class="tab-label" for="moves">Base moves</label>
+      <label class="tab-label" for="moves">Sway</label>
       <div class="tab-content">
         <button class="ginga">Ginga</button>
         <button class="ginga">Ginga Variation 1</button>
         <button class="ginga">Ginga Variation 2</button>
         <button class="ginga">Ginga Variation 3</button>
-
-        <button class="move">Au</button>
       </div>
     </div>
 
@@ -81,6 +79,7 @@ minimum-scale=1.0, maximum-scale=1.0" />
       <input type="radio" id="acrobatics" name="rd">
       <label class="tab-label" for="acrobatics">Acrobatics</label>
       <div class="tab-content">
+        <button class="move">Au</button>
         <button class="move">Macaco</button>
         <button class="move">Macaco Lateral</button>
         <button class="move">Backflip</button>
@@ -106,11 +105,11 @@ minimum-scale=1.0, maximum-scale=1.0" />
 
   <button id="camera">📷</button>
 
-  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <script async src="libs/es-module-shims.js"></script>
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.134.0/build/three.module.js"
+        "three": "/libs/three.module.js"
       }
     }
   </script>

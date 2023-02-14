@@ -26,6 +26,7 @@ export default class Player {
       this.setState(name)
       return
     }
+    console.log(name)
 
     this.oldState = this.currentState
     if (this.oldState) {
