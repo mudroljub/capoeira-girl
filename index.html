@@ -6,95 +6,97 @@
   <meta name="description" content="Learn Capoeira moves with Capoeira girl">
   <meta name="viewport" content="initial-scale=1.0, user-scalable=0,
 minimum-scale=1.0, maximum-scale=1.0" />
-  <style>
-    body {
-      background: #87CEEB;
-      margin: 0;
-      overflow: hidden;
-    }
-
-    button {
-      background: transparent;
-      border-color: transparent;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    @media (hover: hover) {
-      *::-webkit-scrollbar {
-        width: 2px;
-      }
-
-      * {
-        scrollbar-width: thin;
-      }
-    }
-
-    @media (hover: none) {
-      button {
-        border-color: #fff;
-      }
-    }
-
-    #title {
-      color: white;
-      font-size: 5vw;
-      left: 0;
-      margin-top: 3%;
-      position: absolute;
-      right: 0;
-      text-align: center;
-    }
-
-    #switch {
-      align-items: center;
-      bottom: 4px;
-      cursor: pointer;
-      display: flex;
-      left: 50%;
-      margin-left: -50px;
-      position: absolute;
-    }
-
-    #checkbox {
-      height: 14px;
-      width: 14px;
-    }
-
-    #fullscreen,
-    #camera {
-      border: none;
-    }
-
-    #fullscreen {
-      color: #000;
-      font-size: 28px;
-      line-height: 28px;
-      position: absolute;
-      right: 4px;
-      top: 4px;
-    }
-
-    #camera {
-      bottom: 4px;
-      font-size: 22px;
-      line-height: 22px;
-      position: absolute;
-      right: 4px;
-    }
-
-    #preloader {
-      left: 50%;
-      margin-left: -50px;
-      position: absolute;
-      top: 200px;
-    }
-  </style>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="menu.css">
 </head>
 
 <body>
 
   <h1 id="title"></h1>
+
+  <div class="tabs">
+    <div class="tab">
+      <input type="radio" id="moves" name="rd" checked>
+      <label class="tab-label" for="moves">Base moves</label>
+      <div class="tab-content">
+        <button>Ginga</button>
+        <button>Ginga Variation 1</button>
+        <button>Ginga Variation 2</button>
+        <button>Ginga Variation 3</button>
+
+        <button>Au</button>
+      </div>
+    </div>
+
+    <div class="tab">
+      <input type="radio" id="attacks" name="rd">
+      <label class="tab-label" for="attacks">Attacks</label>
+      <div class="tab-content">
+        <button>Ponteira</button>
+
+        <button>Bencao</button>
+        <button>Chapa</button>
+        <button>Chapa Giratoria</button>
+        <button>Chapa Giratoria Back</button>
+    
+        <button>Meia Lua De Frente</button>
+        <button>Armada</button>
+        <button>Queshada</button>
+    
+        <button>Meia Lua De Compasso</button>
+        <button>Meia Lua De Compasso Back</button>
+        <button>Meia Lua De Compasso Double</button>
+    
+        <button>Martelo</button>
+        <button>Martelo 3</button>
+        <button>Martelo Do Chau</button>
+        <button>Martelo Do Chau Sem Mao</button>
+        <button>Chapeu De Couro</button>    
+      </div>
+    </div>
+
+    <div class="tab">
+      <input type="radio" id="defences" name="rd">
+      <label class="tab-label" for="defences">Defences</label>
+      <div class="tab-content">
+        <button>Cocorinha</button>
+        <button>Esquiva Lateral</button>
+        <button>Esquiva Baixa</button>
+        <button>Esquiva to Role</button>
+    
+        <button>Troca</button>    
+      </div>
+    </div>
+
+    <div class="tab">
+      <input type="radio" id="takedowns" name="rd">
+      <label class="tab-label" for="takedowns">Takedowns</label>
+      <div class="tab-content">
+        <button>Rasteira</button>
+        <button>Rasteira 2</button>    
+      </div>
+    </div>
+
+    <div class="tab">
+      <input type="radio" id="acrobatics" name="rd">
+      <label class="tab-label" for="acrobatics">Acrobatics</label>
+      <div class="tab-content">
+        <button>Macaco</button>
+        <button>Macaco Lateral</button>
+        <button>Backflip</button>
+      </div>
+    </div>
+
+    <div class="tab">
+      <input type="radio" id="sequences" name="rd">
+      <label class="tab-label" for="sequences">Sequences</label>
+      <div class="tab-content">
+        <button>Au To Role</button>
+        <button>Armada To Esquiva</button>
+        <button>Sequence 1</button> 
+      </div>
+    </div>
+  </div>
 
   <img id="preloader" src="assets/loading.gif">
 

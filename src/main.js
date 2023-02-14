@@ -1,11 +1,11 @@
 import * as THREE from 'three'
 import {
-  scene, camera, renderer, addUI, sample, loadFbx, loadFbxAnimations
+  scene, camera, renderer, sample, loadFbx, loadFbxAnimations
 } from './utils.js'
 import Player from './Player.js'
 
 const animNames = [
-  'Armada', 'Bencao', 'Chapa', 'Chapaeu De Couro', 'Au', 'Chapa Giratoria',
+  'Armada', 'Bencao', 'Chapa', 'Chapeu De Couro', 'Au', 'Chapa Giratoria',
   'Chapa Giratoria Back', 'Meia Lua De Frente', 'Meia Lua De Compasso',
   'Meia Lua De Compasso Back', 'Meia Lua De Compasso Double',
   'Martelo Do Chau', 'Martelo Do Chau Sem Mao', 'Ponteira', 'Au To Role',
@@ -23,15 +23,13 @@ const toggleBtn = document.getElementById('checkbox')
 
 const interval = 6000 // miliseconds
 let last = Date.now()
-let randomMoves = toggleBtn.checked = true
+let randomMoves = toggleBtn.checked = false
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 const animations = await loadFbxAnimations(['Ginga'])
 
 const player = new Player({ mesh, animations })
 scene.add(mesh)
-
-addUI({ animNames, playAnim: name => player.playAnim(name) })
 
 /* LOOP */
 

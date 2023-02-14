@@ -33,45 +33,6 @@ window.addEventListener('resize', () => {
 
 renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
 
-/* UI */
-
-export function addUI({ animNames, playAnim } = {}) {
-  const containerStyle = `
-    color: #fff;
-    left: 4px;
-    position: absolute;
-    top: 4px;
-    overflow-y: auto;
-    max-height: 100vh;
-    direction: rtl;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-  `
-  const rowStyle = `
-    display: block;
-    margin-top: 1px;
-    margin-bottom: 1px;
-    direction: ltr;
-  `
-  const div = document.createElement('div')
-  div.style = containerStyle
-
-  animNames.forEach(name => {
-    const btn = document.createElement('button')
-    btn.style = rowStyle
-
-    btn.addEventListener('click', e => {
-      playAnim(e.target.innerText)
-    })
-
-    btn.innerHTML = `<span>${name}</span>`
-    div.appendChild(btn)
-  })
-
-  document.body.appendChild(div)
-}
-
 /* SUN */
 
 export function createSun({ position = [25, 30, 40], r = 1 } = {}) {

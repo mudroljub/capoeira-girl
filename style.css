@@ -1,0 +1,73 @@
+body {
+  background: #87CEEB;
+  margin: 0;
+  overflow: hidden;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  *::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  * {
+    scrollbar-width: thin;
+  }
+}
+
+#title {
+  color: white;
+  font-size: 5vw;
+  left: 0;
+  margin-top: 3%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
+
+#switch {
+  align-items: center;
+  bottom: 4px;
+  cursor: pointer;
+  display: flex;
+  left: 50%;
+  margin-left: -50px;
+  position: absolute;
+}
+
+#checkbox {
+  height: 14px;
+  width: 14px;
+}
+
+#fullscreen,
+#camera {
+  border: none;
+}
+
+#fullscreen {
+  color: #000;
+  font-size: 28px;
+  line-height: 28px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+#camera {
+  bottom: 4px;
+  font-size: 22px;
+  line-height: 22px;
+  position: absolute;
+  right: 4px;
+}
+
+#preloader {
+  left: 50%;
+  margin-left: -50px;
+  position: absolute;
+  top: 200px;
+}
