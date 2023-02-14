@@ -8,6 +8,7 @@ const clock = new THREE.Clock()
 const toggleBtn = document.getElementById('checkbox')
 const moves = document.getElementsByClassName('move')
 const gingas = document.getElementsByClassName('ginga')
+const speed = document.getElementById('speed')
 
 const animNames = [...moves].map(btn => btn.innerText)
 
@@ -36,7 +37,8 @@ void async function loop() {
     last = Date.now()
   }
 
-  player.update(delta)
+  const percent = Number(speed.value) / 100
+  player.update(delta * percent)
   renderer.render(scene, camera)
 }()
 

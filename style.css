@@ -27,6 +27,15 @@ button {
   bottom: 4px;
   cursor: pointer;
   display: flex;
+  margin-left: 10px;
+  position: absolute;
+}
+
+#speed {
+  align-items: center;
+  bottom: 4px;
+  cursor: pointer;
+  display: flex;
   left: 50%;
   margin-left: -50px;
   position: absolute;
