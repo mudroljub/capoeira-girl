@@ -28,11 +28,13 @@ void async function loop() {
   requestAnimationFrame(loop)
   const delta = clock.getDelta()
 
-  // if (Date.now() - last >= interval) {
-  //   if (randomMoves) await player.setState(sample(animNames))
-  //   else if (player.oldState?.name) await player.setState(player.oldState?.name)
-  //   last = Date.now()
-  // }
+  if (Date.now() - last >= interval) {
+    if (randomMoves)
+      await player.setState(sample(animNames))
+    else if (animNames.includes(player.oldState?.name))
+      await player.setState(player.oldState.name)
+    last = Date.now()
+  }
 
   player.update(delta)
   renderer.render(scene, camera)
@@ -58,12 +60,13 @@ document.getElementById('fullscreen').addEventListener('click', () => {
 
 ;[...moves].forEach(btn => {
   btn.addEventListener('click', async e => {
-    if (!player.currentState instanceof GingaState) return
+    console.log('currentState instanceof GingaState', player.currentState instanceof GingaState)
+    if (player.currentState instanceof GingaState) {
+      await player.setState(e.target.innerText)
+      last = Date.now()
 
-    await player.setState(e.target.innerText)
-    last = Date.now()
-
-    await navigator.wakeLock?.request('screen')
+      await navigator.wakeLock?.request('screen')
+    }
   })
 })
 
