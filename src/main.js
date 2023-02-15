@@ -38,6 +38,13 @@ const playAction = async(e, repeat) => {
   await navigator.wakeLock?.request('screen')
 }
 
+const toggleCamera = () => {
+  const newZ = camera.position.z > 0 ? -4.5 : 3
+  camera.position.copy(cameraDefaults)
+  camera.position.z = newZ
+  camera.lookAt(cameraTarget)
+}
+
 /* LOOP */
 
 void async function loop() {
@@ -70,12 +77,7 @@ moves.forEach(btn =>
   })
 )
 
-document.getElementById('camera').addEventListener('click', () => {
-  const newZ = camera.position.z > 0 ? -4.5 : 3
-  camera.position.copy(cameraDefaults)
-  camera.position.z = newZ
-  camera.lookAt(cameraTarget)
-})
+document.getElementById('camera').addEventListener('click', toggleCamera)
 
 /* HIDE PRELOADER */
 
