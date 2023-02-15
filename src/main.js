@@ -3,7 +3,6 @@ import { scene, camera, renderer, sample, loadFbx } from './utils.js'
 import Player from './Player.js'
 import IdleState from './states/IdleState.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-// import './FullScreen.js'
 
 const clock = new THREE.Clock()
 const controls = new OrbitControls(camera, renderer.domElement)
@@ -13,14 +12,13 @@ const cameraDefaults = new THREE.Vector3(0, 1.2, 3)
 camera.position.copy(cameraDefaults)
 
 const moves = document.querySelectorAll('.special')
-const toggleBtn = document.getElementById('checkbox')
+const randomMoves = document.getElementById('random-moves')
 const speed = document.getElementById('speed')
 
 const moveNames = [...moves].map(btn => btn.innerText)
 
 const interval = 6000 // miliseconds
 let last = Date.now()
-let randomMoves = toggleBtn.checked = false
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 
@@ -32,6 +30,14 @@ scene.add(mesh)
 const cameraTarget = new THREE.Vector3(0, cameraDefaults.y, 0)
 controls.target = cameraTarget
 
+/* FUNCTIONS */
+
+const playAction = async(e, repeat) => {
+  await player.setState(e.target.innerText, repeat)
+  last = Date.now()
+  await navigator.wakeLock?.request('screen')
+}
+
 /* LOOP */
 
 void async function loop() {
@@ -39,7 +45,7 @@ void async function loop() {
   const delta = clock.getDelta()
 
   if (!player.loading && Date.now() - last >= interval) {
-    if (randomMoves)
+    if (randomMoves.checked)
       await player.setState(sample(moveNames))
     else if (moveNames.includes(player.oldState?.name))
       await player.setState(player.oldState.name)
@@ -54,12 +60,6 @@ void async function loop() {
 
 /* EVENTS */
 
-const playAction = async(e, repeat) => {
-  await player.setState(e.target.innerText, repeat)
-  last = Date.now()
-  await navigator.wakeLock?.request('screen')
-}
-
 document.querySelectorAll('.idle').forEach(btn =>
   btn.addEventListener('click', e => playAction(e, true))
 )
@@ -69,10 +69,6 @@ moves.forEach(btn =>
     if (player.currentState instanceof IdleState) playAction(e, false)
   })
 )
-
-toggleBtn.addEventListener('click', () => {
-  randomMoves = !randomMoves
-})
 
 document.getElementById('camera').addEventListener('click', () => {
   const newZ = camera.position.z > 0 ? -4.5 : 3
