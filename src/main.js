@@ -28,7 +28,7 @@ void async function loop() {
   requestAnimationFrame(loop)
   const delta = clock.getDelta()
 
-  if (Date.now() - last >= interval) {
+  if (!player.loading && Date.now() - last >= interval) {
     if (randomMoves)
       await player.setState(sample(moveNames))
     else if (moveNames.includes(player.oldState?.name))

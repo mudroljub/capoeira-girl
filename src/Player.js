@@ -15,6 +15,8 @@ const enable = btn => {
 }
 
 export default class Player {
+  #loading = false
+
   constructor({ mesh }) {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
@@ -22,13 +24,22 @@ export default class Player {
     this.buttons = document.querySelectorAll('.ginga,.move')
   }
 
+  set loading(isLoading) {
+    this.#loading = isLoading
+    if (isLoading) this.buttons.forEach(disable)
+    else this.buttons.forEach(enable)
+  }
+
+  get loading() {
+    return this.#loading
+  }
+
   async setState(name, repeat = false) {
-    console.log(name)
     if (!this.actions[name]) {
-      this.buttons.forEach(disable)
+      this.loading = true
       const animation = await loadFbxAnimations([name])
       this.actions[name] = this.mixer.clipAction(animation[0])
-      this.buttons.forEach(enable)
+      this.loading = false
     }
 
     this.oldState = this.currentState
