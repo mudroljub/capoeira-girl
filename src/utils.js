@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { FBXLoader } from 'https://unpkg.com/three@0.134.0/examples/jsm/loaders/FBXLoader.js'
+import { FBXLoader } from 'three/addons/loaders/FBXLoader.js'
 
 export const scene = new THREE.Scene()
 const sun = createSun()

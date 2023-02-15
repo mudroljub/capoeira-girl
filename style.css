@@ -46,21 +46,8 @@ button {
   width: 14px;
 }
 
-#fullscreen,
 #camera {
   border: none;
-}
-
-#fullscreen {
-  color: #000;
-  font-size: 28px;
-  line-height: 28px;
-  position: absolute;
-  right: 4px;
-  top: 4px;
-}
-
-#camera {
   bottom: 4px;
   font-size: 22px;
   line-height: 22px;

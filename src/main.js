@@ -3,6 +3,7 @@ import { scene, camera, renderer, sample, loadFbx } from './utils.js'
 import Player from './Player.js'
 import IdleState from './states/IdleState.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import './FullScreen.js'
 
 const clock = new THREE.Clock()
 const controls = new OrbitControls(camera, renderer.domElement)
@@ -78,13 +79,6 @@ document.getElementById('camera').addEventListener('click', () => {
   camera.position.copy(cameraDefaults)
   camera.position.z = newZ
   camera.lookAt(cameraTarget)
-})
-
-document.getElementById('fullscreen').addEventListener('click', () => {
-  if (!document.fullscreenElement)
-    document.documentElement.requestFullscreen()
-  else if (document.exitFullscreen)
-    document.exitFullscreen()
 })
 
 /* HIDE PRELOADER */
