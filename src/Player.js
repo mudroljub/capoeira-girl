@@ -4,13 +4,6 @@ import { loadFbxAnimations } from './utils.js'
 import GingaState from './states/GingaState.js'
 import SpecialState from './states/SpecialState.js'
 
-const states = {
-  Ginga: GingaState,
-  'Ginga Variation 1': GingaState,
-  'Ginga Variation 2': GingaState,
-  'Ginga Variation 3': GingaState,
-}
-
 const disable = btn => {
   btn.disabled = true
   btn.style.pointerEvents = 'none'
@@ -29,7 +22,7 @@ export default class Player {
     this.buttons = document.querySelectorAll('.ginga,.move')
   }
 
-  async setState(name) {
+  async setState(name, repeat = false) {
     if (!this.actions[name]) {
       this.buttons.forEach(disable)
       const animation = await loadFbxAnimations([name])
@@ -42,7 +35,9 @@ export default class Player {
       if (this.oldState.name == name) return
       this.oldState.exit()
     }
-    const State = states[name] || SpecialState
+    const State = repeat
+      ? GingaState
+      : SpecialState
     this.currentState = new State(this, name)
     this.currentState.enter(this.oldState)
   }

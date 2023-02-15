@@ -5,8 +5,8 @@ import GingaState from './states/GingaState.js'
 
 const clock = new THREE.Clock()
 
+const moves = document.querySelectorAll('.move')
 const toggleBtn = document.getElementById('checkbox')
-const moves = document.getElementsByClassName('move')
 const speed = document.getElementById('speed')
 
 const animNames = [...moves].map(btn => btn.innerText)
@@ -18,7 +18,7 @@ let randomMoves = toggleBtn.checked = false
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 
 const player = new Player({ mesh })
-await player.setState('Ginga')
+await player.setState('Ginga', true)
 
 scene.add(mesh)
 
@@ -43,19 +43,19 @@ void async function loop() {
 
 /* EVENTS */
 
-const playAction = async e => {
-  await player.setState(e.target.innerText)
+const playAction = async(e, repeat) => {
+  await player.setState(e.target.innerText, repeat)
   last = Date.now()
   await navigator.wakeLock?.request('screen')
 }
 
-document.getElementsByClassName('ginga').forEach(btn =>
-  btn.addEventListener('click', playAction)
+document.querySelectorAll('.ginga').forEach(btn =>
+  btn.addEventListener('click', e => playAction(e, true))
 )
 
 moves.forEach(btn =>
   btn.addEventListener('click', async e => {
-    if (player.currentState instanceof GingaState) playAction(e)
+    if (player.currentState instanceof GingaState) playAction(e, false)
   })
 )
 
