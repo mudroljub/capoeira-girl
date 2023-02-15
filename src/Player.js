@@ -11,23 +11,30 @@ const states = {
   'Ginga Variation 3': GingaState,
 }
 
+const disable = btn => {
+  btn.disabled = true
+  btn.style.pointerEvents = 'none'
+}
+
+const enable = btn => {
+  btn.disabled = false
+  btn.style.pointerEvents = 'auto'
+}
+
 export default class Player {
   constructor({ mesh }) {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = {}
-  }
-
-  async loadAnimation(name) {
-    const animation = await loadFbxAnimations([name])
-    this.actions[animation[0].name] = this.mixer.clipAction(animation[0])
+    this.buttons = document.querySelectorAll('.ginga,.move')
   }
 
   async setState(name) {
     if (!this.actions[name]) {
-      await this.loadAnimation(name)
-      this.setState(name)
-      return
+      this.buttons.forEach(disable)
+      const animation = await loadFbxAnimations([name])
+      this.actions[name] = this.mixer.clipAction(animation[0])
+      this.buttons.forEach(enable)
     }
 
     this.oldState = this.currentState

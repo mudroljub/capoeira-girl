@@ -7,7 +7,6 @@ const clock = new THREE.Clock()
 
 const toggleBtn = document.getElementById('checkbox')
 const moves = document.getElementsByClassName('move')
-const gingas = document.getElementsByClassName('ginga')
 const speed = document.getElementById('speed')
 
 const animNames = [...moves].map(btn => btn.innerText)
@@ -44,6 +43,23 @@ void async function loop() {
 
 /* EVENTS */
 
+;[...document.getElementsByClassName('ginga')].forEach(btn => {
+  btn.addEventListener('click', async e => {
+    await player.setState(e.target.innerText)
+  })
+})
+
+;[...moves].forEach(btn => {
+  btn.addEventListener('click', async e => {
+    if (player.currentState instanceof GingaState) {
+      await player.setState(e.target.innerText)
+      last = Date.now()
+
+      await navigator.wakeLock?.request('screen')
+    }
+  })
+})
+
 toggleBtn.addEventListener('click', () => {
   randomMoves = !randomMoves
 })
@@ -58,23 +74,6 @@ document.getElementById('fullscreen').addEventListener('click', () => {
     document.documentElement.requestFullscreen()
   else if (document.exitFullscreen)
     document.exitFullscreen()
-})
-
-;[...moves].forEach(btn => {
-  btn.addEventListener('click', async e => {
-    if (player.currentState instanceof GingaState) {
-      await player.setState(e.target.innerText)
-      last = Date.now()
-
-      await navigator.wakeLock?.request('screen')
-    }
-  })
-})
-
-;[...gingas].forEach(btn => {
-  btn.addEventListener('click', async e => {
-    await player.setState(e.target.innerText)
-  })
 })
 
 /* HIDE PRELOADER */
