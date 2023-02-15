@@ -2,8 +2,14 @@ import * as THREE from 'three'
 import { scene, camera, renderer, sample, loadFbx } from './utils.js'
 import Player from './Player.js'
 import IdleState from './states/IdleState.js'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 const clock = new THREE.Clock()
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.maxPolarAngle = Math.PI / 2 - 0.1
+
+const cameraDefaults = new THREE.Vector3(0, 1.2, 3)
+camera.position.copy(cameraDefaults)
 
 const moves = document.querySelectorAll('.special')
 const toggleBtn = document.getElementById('checkbox')
@@ -22,6 +28,9 @@ await player.setState('Ginga', true)
 
 scene.add(mesh)
 
+const cameraTarget = new THREE.Vector3(0, cameraDefaults.y, 0)
+controls.target = cameraTarget
+
 /* LOOP */
 
 void async function loop() {
@@ -38,6 +47,7 @@ void async function loop() {
 
   const percent = Number(speed.value) / 100
   player.update(delta * percent)
+  controls.update()
   renderer.render(scene, camera)
 }()
 
@@ -64,8 +74,10 @@ toggleBtn.addEventListener('click', () => {
 })
 
 document.getElementById('camera').addEventListener('click', () => {
-  camera.position.z = camera.position.z > 0 ? -4.5 : 3
-  camera.lookAt(new THREE.Vector3(0, camera.position.y, 0))
+  const newZ = camera.position.z > 0 ? -4.5 : 3
+  camera.position.copy(cameraDefaults)
+  camera.position.z = newZ
+  camera.lookAt(cameraTarget)
 })
 
 document.getElementById('fullscreen').addEventListener('click', () => {

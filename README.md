@@ -8,8 +8,4 @@ Made with love and Three.js.
 
 ![screenshot](screenshot.jpg)
 
-Credits: *3D model and animations are from www.mixamo.com*
-
-## TODO
-
-- dodati orbit controle
+Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com*.

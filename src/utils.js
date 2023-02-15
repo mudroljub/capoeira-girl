@@ -11,8 +11,6 @@ scene.add(createGround({ size: 100, color: 0xF2D16B }))
 
 export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
 
-camera.position.set(0, 1.2, 3)
-
 /* RENDERER */
 
 export const renderer = new THREE.WebGLRenderer({ alpha: true })
