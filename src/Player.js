@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { loadFbxAnimations } from './utils.js'
+import { loadFbxAnimations, sample } from './utils.js'
 import IdleState from './states/IdleState.js'
 import SpecialState from './states/SpecialState.js'
 
@@ -21,8 +21,17 @@ export default class Player {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = {}
+    this.lastAnimTime = Date.now()
     this.buttons = document.querySelectorAll('.idle,.special')
+    this.moves = document.querySelectorAll('.special')
+    this.moveNames = [...this.moves].map(btn => btn.innerText)
+
+    this.buttons.forEach(btn => btn.addEventListener('click', e => {
+      if (this.freeToPlay) this.setState(e.target.innerText)
+    }))
   }
+
+  /* GETTERS & SETTERS */
 
   set loading(isLoading) {
     this.#loading = isLoading
@@ -34,7 +43,35 @@ export default class Player {
     return this.#loading
   }
 
-  async setState(name, repeat = false) {
+  get isIdle() {
+    return this.currentState instanceof IdleState
+  }
+
+  get freeToPlay() {
+    return !this.loading && this.isIdle
+  }
+
+  get isPrevMove() {
+    return this.isMove(this.oldState?.name)
+  }
+
+  /* HELPERS */
+
+  isMove(name) {
+    return this.moveNames.includes(name)
+  }
+
+  setPrevMove() {
+    return this.setState(this.oldState.name)
+  }
+
+  setRandomMove() {
+    return this.setState(sample(this.moveNames))
+  }
+
+  /* FSM */
+
+  async setState(name) {
     if (!this.actions[name]) {
       this.loading = true
       const animation = await loadFbxAnimations([name])
@@ -47,7 +84,7 @@ export default class Player {
       if (this.oldState.name == name) return
       this.oldState.exit()
     }
-    const State = repeat ? IdleState : SpecialState
+    const State = this.isMove(name) ? SpecialState : IdleState
     this.currentState = new State(this, name)
     this.currentState.enter(this.oldState)
   }

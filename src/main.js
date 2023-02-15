@@ -1,7 +1,6 @@
 import * as THREE from 'three'
-import { scene, camera, renderer, sample, loadFbx } from './utils.js'
+import { scene, camera, renderer, loadFbx } from './utils.js'
 import Player from './Player.js'
-import IdleState from './states/IdleState.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 const clock = new THREE.Clock()
@@ -11,19 +10,15 @@ controls.maxPolarAngle = Math.PI / 2 - 0.1
 const cameraDefaults = new THREE.Vector3(0, 1.2, 3)
 camera.position.copy(cameraDefaults)
 
-const moves = document.querySelectorAll('.special')
 const randomMoves = document.getElementById('random-moves')
 const speed = document.getElementById('speed')
 
-const moveNames = [...moves].map(btn => btn.innerText)
-
 const interval = 6000 // miliseconds
-let last = Date.now()
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 
 const player = new Player({ mesh })
-await player.setState('Ginga', true)
+await player.setState('Ginga')
 
 scene.add(mesh)
 
@@ -31,12 +26,6 @@ const cameraTarget = new THREE.Vector3(0, cameraDefaults.y, 0)
 controls.target = cameraTarget
 
 /* FUNCTIONS */
-
-const playAction = async(e, repeat) => {
-  await player.setState(e.target.innerText, repeat)
-  last = Date.now()
-  await navigator.wakeLock?.request('screen')
-}
 
 const toggleCamera = () => {
   const newZ = camera.position.z > 0 ? -4.5 : 3
@@ -47,17 +36,23 @@ const toggleCamera = () => {
 
 /* LOOP */
 
+const title = document.getElementById('title')
+
 void async function loop() {
   requestAnimationFrame(loop)
   const delta = clock.getDelta()
 
-  if (!player.loading && Date.now() - last >= interval) {
+  const secondsLeft = Math.ceil((interval - (Date.now() - player.lastAnimTime)) / 1000)
+  console.log(secondsLeft)
+
+  if (!randomMoves.checked && player.isPrevMove && secondsLeft < 4 && secondsLeft > 0)
+    title.innerHTML = secondsLeft
+
+  if (player.freeToPlay && secondsLeft <= 0)
     if (randomMoves.checked)
-      await player.setState(sample(moveNames))
-    else if (moveNames.includes(player.oldState?.name))
-      await player.setState(player.oldState.name)
-    last = Date.now()
-  }
+      await player.setRandomMove()
+    else if (player.isPrevMove)
+      await player.setPrevMove()
 
   const percent = Number(speed.value) / 100
   player.update(delta * percent)
@@ -67,17 +62,9 @@ void async function loop() {
 
 /* EVENTS */
 
-document.querySelectorAll('.idle').forEach(btn =>
-  btn.addEventListener('click', e => playAction(e, true))
-)
-
-moves.forEach(btn =>
-  btn.addEventListener('click', async e => {
-    if (player.currentState instanceof IdleState) playAction(e, false)
-  })
-)
-
 document.getElementById('camera').addEventListener('click', toggleCamera)
+
+document.addEventListener('click', () => navigator.wakeLock?.request('screen'))
 
 /* HIDE PRELOADER */
 

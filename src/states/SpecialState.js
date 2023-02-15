@@ -32,11 +32,12 @@ export default class SpecialState extends State {
 
   _FinishedCallback() {
     this._Cleanup()
-    this.player.setState(this.player.oldState.name || 'Ginga', true)
+    this.player.setState(this.player.oldState.name || 'Ginga')
   }
 
   exit() {
     this._Cleanup()
     title.innerHTML = ''
+    this.player.lastAnimTime = Date.now()
   }
 }
