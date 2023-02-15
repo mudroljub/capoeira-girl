@@ -4,6 +4,11 @@ import { loadFbxAnimations, sample } from './utils.js'
 import IdleState from './states/IdleState.js'
 import SpecialState from './states/SpecialState.js'
 
+const title = document.getElementById('title')
+const randomMoves = document.getElementById('random-moves')
+const buttons = document.querySelectorAll('.idle,.special')
+const moves = [...document.querySelectorAll('.special')].map(btn => btn.innerText)
+
 const disable = btn => {
   btn.disabled = true
   btn.style.pointerEvents = 'none'
@@ -14,9 +19,6 @@ const enable = btn => {
   btn.style.pointerEvents = 'auto'
 }
 
-const title = document.getElementById('title')
-const randomMoves = document.getElementById('random-moves')
-
 export default class Player {
   #loading = false
 
@@ -26,11 +28,8 @@ export default class Player {
     this.actions = {}
     this.lastAnimTime = Date.now()
     this.interval = 6000 // miliseconds
-    this.buttons = document.querySelectorAll('.idle,.special')
-    this.moves = document.querySelectorAll('.special')
-    this.moveNames = [...this.moves].map(btn => btn.innerText)
 
-    this.buttons.forEach(btn => btn.addEventListener('click', e => {
+    buttons.forEach(btn => btn.addEventListener('click', e => {
       if (this.freeToPlay) this.setState(e.target.innerText)
     }))
   }
@@ -39,8 +38,8 @@ export default class Player {
 
   set loading(isLoading) {
     this.#loading = isLoading
-    if (isLoading) this.buttons.forEach(disable)
-    else this.buttons.forEach(enable)
+    if (isLoading) buttons.forEach(disable)
+    else buttons.forEach(enable)
   }
 
   get loading() {
@@ -56,21 +55,17 @@ export default class Player {
   }
 
   get hasPrevMove() {
-    return this.isMove(this.oldState?.name)
+    return moves.includes(this.oldState?.name)
   }
 
   /* HELPERS */
-
-  isMove(name) {
-    return this.moveNames.includes(name)
-  }
 
   setPrevMove() {
     return this.setState(this.oldState.name)
   }
 
   setRandomMove() {
-    return this.setState(sample(this.moveNames))
+    return this.setState(sample(moves))
   }
 
   /* FSM */
@@ -88,7 +83,7 @@ export default class Player {
       if (this.oldState.name == name) return
       this.oldState.exit()
     }
-    const State = this.isMove(name) ? SpecialState : IdleState
+    const State = moves.includes(name) ? SpecialState : IdleState
     this.currentState = new State(this, name)
     this.currentState.enter(this.oldState)
   }
