@@ -10,10 +10,7 @@ controls.maxPolarAngle = Math.PI / 2 - 0.1
 const cameraDefaults = new THREE.Vector3(0, 1.2, 3)
 camera.position.copy(cameraDefaults)
 
-const randomMoves = document.getElementById('random-moves')
 const speed = document.getElementById('speed')
-
-const interval = 6000 // miliseconds
 
 const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 
@@ -36,26 +33,13 @@ const toggleCamera = () => {
 
 /* LOOP */
 
-const title = document.getElementById('title')
-
 void async function loop() {
   requestAnimationFrame(loop)
   const delta = clock.getDelta()
 
-  const secondsLeft = Math.ceil((interval - (Date.now() - player.lastAnimTime)) / 1000)
-  console.log(secondsLeft)
+  const speedPercent = Number(speed.value) / 100
+  await player.update(delta * speedPercent)
 
-  if (!randomMoves.checked && player.isPrevMove && secondsLeft < 4 && secondsLeft > 0)
-    title.innerHTML = secondsLeft
-
-  if (player.freeToPlay && secondsLeft <= 0)
-    if (randomMoves.checked)
-      await player.setRandomMove()
-    else if (player.isPrevMove)
-      await player.setPrevMove()
-
-  const percent = Number(speed.value) / 100
-  player.update(delta * percent)
   controls.update()
   renderer.render(scene, camera)
 }()

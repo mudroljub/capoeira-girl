@@ -14,6 +14,9 @@ const enable = btn => {
   btn.style.pointerEvents = 'auto'
 }
 
+const title = document.getElementById('title')
+const randomMoves = document.getElementById('random-moves')
+
 export default class Player {
   #loading = false
 
@@ -22,6 +25,7 @@ export default class Player {
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = {}
     this.lastAnimTime = Date.now()
+    this.interval = 6000 // miliseconds
     this.buttons = document.querySelectorAll('.idle,.special')
     this.moves = document.querySelectorAll('.special')
     this.moveNames = [...this.moves].map(btn => btn.innerText)
@@ -51,7 +55,7 @@ export default class Player {
     return !this.loading && this.isIdle
   }
 
-  get isPrevMove() {
+  get hasPrevMove() {
     return this.isMove(this.oldState?.name)
   }
 
@@ -89,8 +93,28 @@ export default class Player {
     this.currentState.enter(this.oldState)
   }
 
-  update(delta) {
+  /* UPDATE */
+
+  updateCountdown(secondsLeft) {
+    if (!randomMoves.checked && this.hasPrevMove && secondsLeft < 4 && secondsLeft > 0)
+      title.innerHTML = secondsLeft
+  }
+
+  async playSomeMove(secondsLeft) {
+    if (this.freeToPlay && secondsLeft <= 0)
+      if (randomMoves.checked)
+        await this.setRandomMove()
+      else if (this.hasPrevMove)
+        await this.setPrevMove()
+  }
+
+  async update(delta) {
     this.currentState?.update()
+
+    const secondsLeft = Math.ceil((this.interval - (Date.now() - this.lastAnimTime)) / 1000)
+    this.updateCountdown(secondsLeft)
+    await this.playSomeMove(secondsLeft)
+
     this.mixer.update(delta)
   }
 }
