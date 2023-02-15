@@ -2,7 +2,7 @@ import State from './State.js'
 
 const duration = .2
 
-export default class GingaState extends State {
+export default class IdleState extends State {
   enter(oldState) {
     this.currentAction = this.actions[this.name]
     if (oldState) {

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 import { loadFbxAnimations } from './utils.js'
-import GingaState from './states/GingaState.js'
+import IdleState from './states/IdleState.js'
 import SpecialState from './states/SpecialState.js'
 
 const disable = btn => {
@@ -21,7 +21,7 @@ export default class Player {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = {}
-    this.buttons = document.querySelectorAll('.ginga,.move')
+    this.buttons = document.querySelectorAll('.idle,.special')
   }
 
   set loading(isLoading) {
@@ -47,7 +47,7 @@ export default class Player {
       if (this.oldState.name == name) return
       this.oldState.exit()
     }
-    const State = repeat ? GingaState : SpecialState
+    const State = repeat ? IdleState : SpecialState
     this.currentState = new State(this, name)
     this.currentState.enter(this.oldState)
   }

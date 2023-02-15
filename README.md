@@ -12,6 +12,4 @@ Credits: *3D model and animations are from www.mixamo.com*
 
 ## TODO
 
-- mozda dodati naslov i za Ginga
-- preimenovati GingaState u IdleState, move u special, ginga u idle
 - dodati orbit controle

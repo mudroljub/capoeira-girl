@@ -23408,7 +23408,7 @@ class Group extends Object3D {
 
 Group.prototype.isGroup = true;
 
-const _moveEvent = { type: 'move' };
+const _moveEvent = { type: 'special' };
 
 class WebXRController {
 
@@ -37426,7 +37426,7 @@ class KeyframeTrack {
 
 	}
 
-	// move all keyframes either forwards or backwards in time
+	// special all keyframes either forwards or backwards in time
 	shift( timeOffset ) {
 
 		if ( timeOffset !== 0.0 ) {
@@ -43975,7 +43975,7 @@ class AnimationObjectGroup {
 
 				knownObject = objects[ index ];
 
-				// move existing object to the ACTIVE region
+				// special existing object to the ACTIVE region
 
 				const firstActiveIndex = -- nCachedObjects,
 					lastCachedObject = objects[ firstActiveIndex ];
@@ -44041,7 +44041,7 @@ class AnimationObjectGroup {
 
 			if ( index !== undefined && index >= nCachedObjects ) {
 
-				// move existing object into the CACHED region
+				// special existing object into the CACHED region
 
 				const lastCachedIndex = nCachedObjects ++,
 					firstActiveObject = objects[ lastCachedIndex ];

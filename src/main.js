@@ -1,11 +1,11 @@
 import * as THREE from 'three'
 import { scene, camera, renderer, sample, loadFbx } from './utils.js'
 import Player from './Player.js'
-import GingaState from './states/GingaState.js'
+import IdleState from './states/IdleState.js'
 
 const clock = new THREE.Clock()
 
-const moves = document.querySelectorAll('.move')
+const moves = document.querySelectorAll('.special')
 const toggleBtn = document.getElementById('checkbox')
 const speed = document.getElementById('speed')
 
@@ -49,13 +49,13 @@ const playAction = async(e, repeat) => {
   await navigator.wakeLock?.request('screen')
 }
 
-document.querySelectorAll('.ginga').forEach(btn =>
+document.querySelectorAll('.idle').forEach(btn =>
   btn.addEventListener('click', e => playAction(e, true))
 )
 
 moves.forEach(btn =>
   btn.addEventListener('click', async e => {
-    if (player.currentState instanceof GingaState) playAction(e, false)
+    if (player.currentState instanceof IdleState) playAction(e, false)
   })
 )
 
