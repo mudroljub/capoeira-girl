@@ -43,22 +43,21 @@ void async function loop() {
 
 /* EVENTS */
 
-;[...document.getElementsByClassName('ginga')].forEach(btn => {
-  btn.addEventListener('click', async e => {
-    await player.setState(e.target.innerText)
-  })
-})
+const playAction = async e => {
+  await player.setState(e.target.innerText)
+  last = Date.now()
+  await navigator.wakeLock?.request('screen')
+}
 
-;[...moves].forEach(btn => {
-  btn.addEventListener('click', async e => {
-    if (player.currentState instanceof GingaState) {
-      await player.setState(e.target.innerText)
-      last = Date.now()
+document.getElementsByClassName('ginga').forEach(btn =>
+  btn.addEventListener('click', playAction)
+)
 
-      await navigator.wakeLock?.request('screen')
-    }
+moves.forEach(btn =>
+  btn.addEventListener('click', async e => {
+    if (player.currentState instanceof GingaState) playAction(e)
   })
-})
+)
 
 toggleBtn.addEventListener('click', () => {
   randomMoves = !randomMoves
