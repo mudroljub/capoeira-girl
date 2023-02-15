@@ -8,10 +8,8 @@ class FullScreen extends HTMLElement {
     this.innerHTML = `
       <style>
         #ikonica {
-          background: white;
           cursor: pointer;
           right: 10px;
-          opacity: 0.75;
           padding: 4px;
           position: absolute;
           top: 10px;

@@ -3,7 +3,7 @@ import { scene, camera, renderer, sample, loadFbx } from './utils.js'
 import Player from './Player.js'
 import IdleState from './states/IdleState.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import './FullScreen.js'
+// import './FullScreen.js'
 
 const clock = new THREE.Clock()
 const controls = new OrbitControls(camera, renderer.domElement)
