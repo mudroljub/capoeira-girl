@@ -9,7 +9,7 @@ const moves = document.querySelectorAll('.move')
 const toggleBtn = document.getElementById('checkbox')
 const speed = document.getElementById('speed')
 
-const animNames = [...moves].map(btn => btn.innerText)
+const moveNames = [...moves].map(btn => btn.innerText)
 
 const interval = 6000 // miliseconds
 let last = Date.now()
@@ -30,8 +30,8 @@ void async function loop() {
 
   if (Date.now() - last >= interval) {
     if (randomMoves)
-      await player.setState(sample(animNames))
-    else if (animNames.includes(player.oldState?.name))
+      await player.setState(sample(moveNames))
+    else if (moveNames.includes(player.oldState?.name))
       await player.setState(player.oldState.name)
     last = Date.now()
   }

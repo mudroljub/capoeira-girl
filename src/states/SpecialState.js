@@ -21,6 +21,7 @@ export default class SpecialState extends State {
       curAction.reset()
       curAction.setLoop(THREE.LoopOnce, 1)
       curAction.clampWhenFinished = true
+      console.log(curAction, oldAction)
       curAction.crossFadeFrom(oldAction, duration, true)
     }
     curAction.play()

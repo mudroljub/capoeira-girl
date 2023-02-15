@@ -23,6 +23,7 @@ export default class Player {
   }
 
   async setState(name, repeat = false) {
+    console.log(name)
     if (!this.actions[name]) {
       this.buttons.forEach(disable)
       const animation = await loadFbxAnimations([name])
@@ -35,9 +36,7 @@ export default class Player {
       if (this.oldState.name == name) return
       this.oldState.exit()
     }
-    const State = repeat
-      ? GingaState
-      : SpecialState
+    const State = repeat ? GingaState : SpecialState
     this.currentState = new State(this, name)
     this.currentState.enter(this.oldState)
   }
