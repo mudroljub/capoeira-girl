@@ -13,3 +13,4 @@ Credits: *3D model and animations are from www.mixamo.com*
 ## TODO
 
 - dodati npm three
+- isprobati Leg Sweep.fbx
