@@ -39,16 +39,13 @@ controls.maxPolarAngle = Math.PI / 2 - 0.1
 
 /* SUN */
 
-export function createSun({ position = [25, 30, 40], r = 1 } = {}) {
-  const spotLight = new THREE.SpotLight(0xffffff)
+export function createSun({ position = [20, 20, 30], r = 1 } = {}) {
+  const spotLight = new THREE.SpotLight(0xffffff, .75)
   spotLight.shadow.mapSize.width = 2048
   spotLight.shadow.mapSize.height = 2048
-  spotLight.shadow.camera.fov = 15
   spotLight.castShadow = true
-  spotLight.decay = 2
-  spotLight.penumbra = 0.05
 
-  const ambientLight = new THREE.AmbientLight(0x343434)
+  const ambientLight = new THREE.AmbientLight(0xEDD59E, .5)
 
   const container = new THREE.Mesh(
     new THREE.SphereGeometry(r),

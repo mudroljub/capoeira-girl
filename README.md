@@ -12,4 +12,4 @@ Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com
 
 ## TODO
 
-- malo približiti kameru
+- dodati idle stanje

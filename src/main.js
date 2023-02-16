@@ -4,7 +4,7 @@ import Player from './Player.js'
 
 const speed = document.getElementById('speed')
 
-const defaultCameraPos = new THREE.Vector3(0, 1.2, 3)
+const defaultCameraPos = new THREE.Vector3(0, .9, 2.75)
 camera.position.copy(defaultCameraPos)
 
 const cameraTarget = new THREE.Vector3(0, defaultCameraPos.y, 0)
@@ -20,10 +20,10 @@ scene.add(mesh)
 /* FUNCTIONS */
 
 const toggleCamera = () => {
-  const newZ = camera.position.z > 0 ? -4.5 : 3
-  camera.position.copy(defaultCameraPos)
-  camera.position.z = newZ
-  camera.lookAt(cameraTarget)
+  const newZ = camera.position.z > 0 ? -defaultCameraPos.z * 1.2 : defaultCameraPos.z
+  const newY = camera.position.z > 0 ? defaultCameraPos.y * .75 : defaultCameraPos.y
+  camera.position.set(defaultCameraPos.x, newY, newZ)
+  cameraTarget.y = newY
 }
 
 /* LOOP */
