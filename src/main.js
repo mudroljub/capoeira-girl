@@ -17,6 +17,8 @@ await player.setState('Ginga')
 
 scene.add(mesh)
 
+// scene.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
+
 /* FUNCTIONS */
 
 const toggleCamera = () => {

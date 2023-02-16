@@ -4,12 +4,13 @@ body {
   overflow: hidden;
 }
 
-button {
+button, input, label {
   cursor: pointer;
 }
 
 .transparent {
   background-color: transparent;
+  border: none;
 }
 
 #title {
@@ -22,19 +23,9 @@ button {
   text-align: center;
 }
 
-#random-wrapper {
-  align-items: center;
-  bottom: 4px;
-  cursor: pointer;
-  display: flex;
-  margin-left: 10px;
-  position: absolute;
-}
-
 #speed {
   align-items: center;
   bottom: 4px;
-  cursor: pointer;
   display: flex;
   left: 50%;
   margin-left: -50px;
@@ -47,7 +38,6 @@ button {
 }
 
 #camera {
-  border: none;
   bottom: 4px;
   font-size: 22px;
   line-height: 22px;
@@ -62,9 +52,18 @@ button {
   top: 200px;
 }
 
+#mirror {
+  align-items: center;
+  bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  margin-left: 10px;
+  position: absolute;
+}
+
 /* ACCORDION */
 
-.tabs input[type="checkbox"] {
+.tab input[type="checkbox"] {
   position: absolute;
   opacity: 0;
   z-index: -1;
@@ -90,7 +89,6 @@ button {
   padding: 8px;
   background: #2c3e50;
   font-weight: bold;
-  cursor: pointer;
 }
 
 .tab-label:hover {
@@ -110,6 +108,15 @@ button {
   color: #2c3e50;
   background: white;
   transition: all 0.35s;
+}
+
+.random-wrapper {
+  align-items: center;
+  background: white;
+  color: #2c3e50;
+  display: flex;
+  font-size: 15px;
+  padding: 4px;
 }
 
 .tab-content button {
@@ -147,7 +154,6 @@ input:checked~.tab-content {
   position: absolute;
   top: -7px;
   left: -5px;
-  cursor: pointer;
   opacity: 0;
   z-index: 2;
   -webkit-touch-callout: none;
@@ -194,7 +200,6 @@ input:checked~.tab-content {
 #menu {
   position: absolute;
   width: 300px;
-  /* margin: -100px 0 0 -50px; */
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);

@@ -11,3 +11,6 @@ Made with love and Three.js.
 Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com*.
 
 ## TODO
+
+- invert / flip / mirror btn
+- malo približiti kameru
