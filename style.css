@@ -8,6 +8,10 @@ button, input, label {
   cursor: pointer;
 }
 
+button i {
+  color: #561217;
+}
+
 .transparent {
   background-color: transparent;
   border: none;
@@ -87,12 +91,12 @@ button, input, label {
   display: flex;
   justify-content: space-between;
   padding: 8px;
-  background: #2c3e50;
+  background: #2C6E63;
   font-weight: bold;
 }
 
 .tab-label:hover {
-  background: #1a252f;
+  background: #1C4740;
 }
 
 .tab-label::after {
@@ -105,7 +109,6 @@ button, input, label {
 
 .tab-content {
   max-height: 0;
-  color: #2c3e50;
   background: white;
   transition: all 0.35s;
 }
@@ -113,7 +116,6 @@ button, input, label {
 .random-wrapper {
   align-items: center;
   background: white;
-  color: #2c3e50;
   display: flex;
   font-size: 15px;
   padding: 4px;
@@ -125,7 +127,7 @@ button, input, label {
 }
 
 input:checked+.tab-label {
-  background: #1a252f;
+  background: #1C4740;
 }
 
 input:checked+.tab-label::after {

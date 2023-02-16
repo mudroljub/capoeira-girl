@@ -8,7 +8,7 @@ export const scene = new THREE.Scene()
 const sun = createSun()
 scene.add(sun)
 
-scene.add(createGround({ size: 100, color: 0xF2D16B }))
+scene.add(createGround({ size: 100, color: 0xF8B735 }))
 
 /* CAMERA */
 
