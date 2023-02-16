@@ -27,6 +27,8 @@ const toggleCamera = () => {
   cameraTarget.y = newY
 }
 
+const mirrorModel = () => mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
+
 const closeOthers = e => checkboxes.forEach(el => {
   if (el !== e.target) el.checked = false
 })
@@ -46,6 +48,8 @@ void async function loop() {
 
 /* EVENTS */
 
+checkboxes.forEach(el => el.addEventListener('change', closeOthers))
+
 document.getElementById('camera').addEventListener('click', toggleCamera)
 
 document.addEventListener('click', () => navigator.wakeLock?.request('screen'))
@@ -54,7 +58,11 @@ document.getElementById('mirror').addEventListener('click', () =>
   mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
 )
 
-checkboxes.forEach(el => el.addEventListener('change', closeOthers))
+document.addEventListener('keydown', e => {
+  if (e.code == 'KeyC') toggleCamera()
+  if (e.code == 'KeyM') mirrorModel()
+  if (e.code.includes('Arrow')) speed.focus()
+})
 
 /* HIDE PRELOADER */
 
