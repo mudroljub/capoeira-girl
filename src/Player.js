@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { loadFbxAnimations, sample } from './utils.js'
+import { loadFbxAnimations, sample, setButton } from './utils.js'
 import IdleState from './states/IdleState.js'
 import SpecialState from './states/SpecialState.js'
 
@@ -8,11 +8,6 @@ const title = document.getElementById('title')
 const randomMoves = document.getElementById('random-moves')
 const buttons = document.querySelectorAll('.idle,.special')
 const moves = [...document.querySelectorAll('.special')].map(btn => btn.innerText)
-
-const setButton = (btn, isLoading) => {
-  btn.disabled = isLoading
-  btn.style.pointerEvents = isLoading ? 'none' : 'auto'
-}
 
 export default class Player {
   #loading = false

@@ -12,6 +12,5 @@ Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com
 
 ## TODO
 
-- onemogućiti dugmiće dok traje animacija
 - c za kameru, m za mirror
-- da se ostali zatvore
+- da se iz pokreta vraća samo u varijante ginge, ne u zagrevanje

@@ -141,3 +141,8 @@ export async function loadFbxAnimations(names, prefix = 'assets/fbx/') {
 }
 
 export const sample = arr => arr[Math.floor(Math.random() * arr.length)]
+
+export const setButton = (btn, disabled) => {
+  btn.disabled = disabled
+  btn.style.pointerEvents = disabled ? 'none' : 'auto'
+}
