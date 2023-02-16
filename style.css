@@ -9,6 +9,10 @@ button, input, label {
 }
 
 button i {
+  font-size: smaller;
+}
+
+button:not(:disabled) i {
   color: #561217;
 }
 
