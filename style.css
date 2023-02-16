@@ -156,9 +156,9 @@ input:checked~.tab-content {
 /* burger icon */
 #toggle-menu span {
   display: block;
-  width: 33px;
+  width: 24px;
   height: 4px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   position: relative;
   background: #232323;
   border-radius: 3px;
@@ -181,14 +181,14 @@ input:checked~.tab-content {
   */
 #burger-checkbox:checked~span {
   opacity: 1;
-  transform: rotate(45deg) translate(-2px, -1px);
+  transform: rotate(45deg) translate(1px, 1px);
 }
 #burger-checkbox:checked~span:nth-last-child(3) {
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
 #burger-checkbox:checked~span:nth-last-child(2) {
-  transform: rotate(-45deg) translate(0, -1px);
+  transform: rotate(-45deg) translate(1px, -1px);
 }
 
 #menu {
