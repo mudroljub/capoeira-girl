@@ -1,5 +1,8 @@
 import * as THREE from 'three'
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+
+export const clock = new THREE.Clock()
 
 export const scene = new THREE.Scene()
 const sun = createSun()
@@ -30,6 +33,9 @@ window.addEventListener('resize', () => {
 })
 
 renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
+
+export const controls = new OrbitControls(camera, renderer.domElement)
+controls.maxPolarAngle = Math.PI / 2 - 0.1
 
 /* SUN */
 
