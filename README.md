@@ -11,5 +11,3 @@ Made with love and Three.js.
 Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com*.
 
 ## TODO
-
-- Make the menu collapsible without having to click on another subitem, that way it doesn't block the view from a smartphone.

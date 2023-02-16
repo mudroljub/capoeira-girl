@@ -62,20 +62,19 @@ button {
   top: 200px;
 }
 
-/* MENU */
+/* ACCORDION */
 
-input[type="radio"] {
+.tabs input[type="checkbox"] {
   position: absolute;
   opacity: 0;
   z-index: -1;
 }
 
-/* Accordion styles */
 .tabs {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
-  max-width: 250px;
+  max-width: 220px;
   position: absolute;
 }
 
@@ -88,11 +87,10 @@ input[type="radio"] {
 .tab-label {
   display: flex;
   justify-content: space-between;
-  padding: 1em;
+  padding: 8px;
   background: #2c3e50;
   font-weight: bold;
   cursor: pointer;
-  /* Icon */
 }
 
 .tab-label:hover {
@@ -115,7 +113,6 @@ input[type="radio"] {
 }
 
 .tab-content button {
-  /* display: block; */
   width: 100%;
   text-align: left;
 }
