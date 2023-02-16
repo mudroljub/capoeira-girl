@@ -36,7 +36,8 @@ export default class SpecialState extends State {
 
   _FinishedCallback() {
     this._Cleanup()
-    this.player.setState(this.player.oldState.name || 'Ginga')
+    this.player.setState(this.player.oldState.name.toLowerCase().includes('ginga')
+      ? this.player.oldState.name : 'Ginga')
   }
 
   exit() {

@@ -12,4 +12,4 @@ Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com
 
 ## TODO
 
-- da se iz pokreta vraća samo u varijante ginge, ne u zagrevanje
+- skratiti animacije gde treba
