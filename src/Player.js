@@ -9,14 +9,9 @@ const randomMoves = document.getElementById('random-moves')
 const buttons = document.querySelectorAll('.idle,.special')
 const moves = [...document.querySelectorAll('.special')].map(btn => btn.innerText)
 
-const disable = btn => {
-  btn.disabled = true
-  btn.style.pointerEvents = 'none'
-}
-
-const enable = btn => {
-  btn.disabled = false
-  btn.style.pointerEvents = 'auto'
+const setButton = (btn, isLoading) => {
+  btn.disabled = isLoading
+  btn.style.pointerEvents = isLoading ? 'none' : 'auto'
 }
 
 export default class Player {
@@ -27,10 +22,10 @@ export default class Player {
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = {}
     this.lastAnimTime = Date.now()
-    this.interval = 6000 // miliseconds
+    this.interval = 6 // seconds
 
     buttons.forEach(btn => btn.addEventListener('click', e => {
-      if (this.freeToPlay) this.setState(e.target.innerText)
+      if (this.isReady) this.setState(e.target.innerText)
     }))
   }
 
@@ -38,8 +33,7 @@ export default class Player {
 
   set loading(isLoading) {
     this.#loading = isLoading
-    if (isLoading) buttons.forEach(disable)
-    else buttons.forEach(enable)
+    buttons.forEach(btn => setButton(btn, isLoading))
   }
 
   get loading() {
@@ -50,7 +44,7 @@ export default class Player {
     return this.currentState instanceof IdleState
   }
 
-  get freeToPlay() {
+  get isReady() {
     return !this.loading && this.isIdle
   }
 
@@ -58,14 +52,12 @@ export default class Player {
     return moves.includes(this.oldState?.name)
   }
 
-  /* HELPERS */
-
-  setPrevMove() {
-    return this.setState(this.oldState.name)
+  get timeSinceLastMove() {
+    return (Date.now() - this.lastAnimTime) / 1000
   }
 
-  setRandomMove() {
-    return this.setState(sample(moves))
+  get shouldReplay() {
+    return !randomMoves.checked && this.hasPrevMove
   }
 
   /* FSM */
@@ -90,25 +82,25 @@ export default class Player {
 
   /* UPDATE */
 
-  updateCountdown(secondsLeft) {
-    if (!randomMoves.checked && this.hasPrevMove && secondsLeft < 4 && secondsLeft > 0)
+  countdown() {
+    const secondsLeft = Math.ceil(this.interval - this.timeSinceLastMove)
+    if (secondsLeft < 4 && secondsLeft > 0)
       title.innerHTML = secondsLeft
   }
 
-  async playSomeMove(secondsLeft) {
-    if (this.freeToPlay && secondsLeft <= 0)
-      if (randomMoves.checked)
-        await this.setRandomMove()
-      else if (this.hasPrevMove)
-        await this.setPrevMove()
+  async chooseState() {
+    if (this.isReady && this.timeSinceLastMove > this.interval)
+      if (this.shouldReplay)
+        await this.setState(this.oldState.name)
+      else if (randomMoves.checked)
+        await this.setState(sample(moves))
   }
 
   async update(delta) {
     this.currentState?.update()
 
-    const secondsLeft = Math.ceil((this.interval - (Date.now() - this.lastAnimTime)) / 1000)
-    this.updateCountdown(secondsLeft)
-    await this.playSomeMove(secondsLeft)
+    if (this.shouldReplay) this.countdown()
+    await this.chooseState()
 
     this.mixer.update(delta)
   }
