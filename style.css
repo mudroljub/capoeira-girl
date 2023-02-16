@@ -8,11 +8,7 @@ button, input, label {
   cursor: pointer;
 }
 
-button i {
-  font-size: smaller;
-}
-
-button:not(:disabled) i {
+button:not(:disabled) b {
   color: #561217;
 }
 
