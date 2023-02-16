@@ -35,7 +35,11 @@ window.addEventListener('resize', () => {
 renderer.domElement.addEventListener('contextmenu', e => e.preventDefault())
 
 export const controls = new OrbitControls(camera, renderer.domElement)
+
 controls.maxPolarAngle = Math.PI / 2 - 0.1
+controls.maxDistance = 20
+controls.minDistance = 2
+controls.zoomSpeed = .3
 
 /* SUN */
 
