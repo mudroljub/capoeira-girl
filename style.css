@@ -114,7 +114,7 @@ button:not(:disabled) i {
 .tab-content {
   max-height: 0;
   background: white;
-  transition: all 0.35s;
+  transition: all .45s;
 }
 
 .random-wrapper {

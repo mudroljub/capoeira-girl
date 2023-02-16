@@ -3,6 +3,7 @@ import { scene, camera, renderer, controls, clock, loadFbx } from './utils.js'
 import Player from './Player.js'
 
 const speed = document.getElementById('speed')
+const checkboxes = document.querySelectorAll('.tab input')
 
 const defaultCameraPos = new THREE.Vector3(0, .9, 2.75)
 camera.position.copy(defaultCameraPos)
@@ -26,6 +27,10 @@ const toggleCamera = () => {
   cameraTarget.y = newY
 }
 
+const closeOthers = e => checkboxes.forEach(el => {
+  if (el !== e.target) el.checked = false
+})
+
 /* LOOP */
 
 void async function loop() {
@@ -48,6 +53,8 @@ document.addEventListener('click', () => navigator.wakeLock?.request('screen'))
 document.getElementById('mirror').addEventListener('click', () =>
   mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
 )
+
+checkboxes.forEach(el => el.addEventListener('change', closeOthers))
 
 /* HIDE PRELOADER */
 

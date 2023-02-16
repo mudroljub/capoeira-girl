@@ -1,9 +1,11 @@
 import State from './State.js'
 
 const duration = .2
+const title = document.getElementById('title')
 
 export default class IdleState extends State {
   enter(oldState) {
+    title.innerHTML = ''
     this.currentAction = this.actions[this.name]
     if (oldState) {
       const oldAction = this.actions[oldState.name]

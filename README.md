@@ -13,4 +13,5 @@ Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com
 ## TODO
 
 - onemogućiti dugmiće dok traje animacija
-- dodati engleske prevode, https://dendearts.com/a-comprehensive-list-of-capoeira-kicks/
+- c za kameru, m za mirror
+- da se ostali zatvore

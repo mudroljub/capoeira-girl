@@ -11,7 +11,6 @@ export default class SpecialState extends State {
   }
 
   enter(oldState) {
-    console.log(this.name)
     title.innerHTML = this.name
     const curAction = this.actions[this.name]
     const mixer = curAction.getMixer()
