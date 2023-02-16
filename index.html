@@ -22,8 +22,20 @@
     <div id="menu">
       <div class="tabs">
         <div class="tab">
+          <input type="checkbox" id="warm-up" name="rd">
+          <label class="tab-label" for="warm-up">Worm Up</label>
+          <div class="tab-content">
+            <button class="idle">Arm Stretch Dance</button>
+            <button class="idle">Leg Stretch Dance</button>
+            <button class="idle">Pike Walk</button>
+            <button class="idle">Burpee</button>
+            <button class="idle">Situps</button>
+          </div>
+        </div>
+
+        <div class="tab">
           <input type="checkbox" id="gingas" name="rd" checked>
-          <label class="tab-label" for="gingas">Basic stance</label>
+          <label class="tab-label" for="gingas">Basic Move</label>
           <div class="tab-content">
             <button class="idle">Ginga</button>
             <button class="idle">Ginga Variation</button>
@@ -34,8 +46,8 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="aus" name="rd">
-          <label class="tab-label" for="aus">Cartwheels</label>
+          <input type="checkbox" id="cartwheels" name="rd">
+          <label class="tab-label" for="cartwheels">Cartwheels</label>
           <div class="tab-content">
             <button class="special">Au</button>
             <button class="special">Au Sideways</button>
@@ -80,19 +92,20 @@
             <button class="special">Esquiva Lateral</button>
             <button class="special">Esquiva De Frente</button>
             <button class="special">Esquiva De Costas</button>
-            <button class="special">Esquiva De Costas 2</button>
 
+            <button class="special">Role</button>
             <button class="special">Troca De Pe</button>
             <button class="special">Queda de Rins</button>
           </div>
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="moves" name="rd">
-          <label class="tab-label" for="moves">Movements</label>
+          <input type="checkbox" id="takedowns" name="rd">
+          <label class="tab-label" for="takedowns">Takedowns</label>
           <div class="tab-content">
             <button class="special">Ginga Sideways</button>
             <button class="special">Ginga Sideways Step</button>
+            <button class="special">Rasteira</button>
             <button class="special">Rabo De Arraia Rasteira</button>
             <button class="special">Meia Lua De Frente Rasteira</button>
           </div>
@@ -102,7 +115,8 @@
           <input type="checkbox" id="acrobatics" name="rd">
           <label class="tab-label" for="acrobatics">Acrobatics</label>
           <div class="tab-content">
-            <button class="special">Pião De Cabeça</button>
+            <button class="special">Pião De Cabeça (<i>Headspin</i>)</button>
+            <button class="special">Mola (<i>Kip Up</i>)</button>
             <button class="special">Macaco</button>
             <button class="special">Macaco Lateral</button>
             <button class="special">Backflip</button>

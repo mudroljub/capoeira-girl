@@ -25,7 +25,9 @@ export default class Player {
     this.interval = 6 // seconds
 
     buttons.forEach(btn => btn.addEventListener('click', e => {
-      if (this.isReady) this.setState(e.target.innerText)
+      if (!this.isReady) return
+      this.setState(e.currentTarget.innerText)
+      title.innerHTML = ''
     }))
   }
 
