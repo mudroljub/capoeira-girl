@@ -17,8 +17,6 @@ await player.setState('Ginga')
 
 scene.add(mesh)
 
-// scene.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
-
 /* FUNCTIONS */
 
 const toggleCamera = () => {
@@ -46,6 +44,10 @@ void async function loop() {
 document.getElementById('camera').addEventListener('click', toggleCamera)
 
 document.addEventListener('click', () => navigator.wakeLock?.request('screen'))
+
+document.getElementById('mirror').addEventListener('click', () =>
+  mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
+)
 
 /* HIDE PRELOADER */
 
