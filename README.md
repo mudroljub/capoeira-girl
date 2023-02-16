@@ -12,6 +12,4 @@ Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com
 
 ## TODO
 
-- dodati odbrojavanje pre poteza: 3, 2, 1
 - Make the menu collapsible without having to click on another subitem, that way it doesn't block the view from a smartphone.
-- favicon
