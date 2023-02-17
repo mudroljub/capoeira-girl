@@ -93,6 +93,7 @@ button:not(:disabled) b {
   padding: 8px;
   background: #2C6E63;
   font-weight: bold;
+  border-bottom: 1px solid #1C4740;
 }
 
 .tab-label:hover {
