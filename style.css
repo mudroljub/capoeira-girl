@@ -125,6 +125,7 @@ button:not(:disabled) b {
 .tab-content button {
   width: 100%;
   text-align: left;
+  padding: 4px;
 }
 
 input:checked+.tab-label {
