@@ -12,17 +12,17 @@
 <body>
   <h1 id="title">Learn Capoeira</h1>
 
-  <div id="toggle-menu" role="navigation">
+  <div id="toggle-menu">
     <input type="checkbox" id="burger-checkbox" checked />
     <!-- burger -->
     <span></span>
     <span></span>
     <span></span>
 
-    <div id="menu">
-      <div class="tabs">
+    <div id="nav-wrapper">
+      <nav class="tabs" role="navigation">
         <div class="tab">
-          <input type="checkbox" id="warm-up" name="rd">
+          <input type="checkbox" id="warm-up">
           <label class="tab-label" for="warm-up">Workout</label>
           <div class="tab-content">
             <button class="idle">Arm stretch dance</button>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="gingas" name="rd" checked>
+          <input type="checkbox" id="gingas" checked autofocus>
           <label class="tab-label" for="gingas">Basic Move</label>
           <div class="tab-content">
             <button class="idle" title="Sway">Ginga</button>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="attacks" name="rd">
+          <input type="checkbox" id="attacks">
           <label class="tab-label" for="attacks">Kicks</label>
           <div class="tab-content">
             <button class="special" title="Pointer">Ponteira</button>
@@ -76,7 +76,7 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="defences" name="rd">
+          <input type="checkbox" id="defences">
           <label class="tab-label" for="defences">Escapes</label>
           <div class="tab-content">
             <button class="special" title="Coconut">Cocorinha</button>
@@ -91,19 +91,19 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="takedowns" name="rd">
+          <input type="checkbox" id="takedowns">
           <label class="tab-label" for="takedowns">Takedowns</label>
           <div class="tab-content">
-            <button class="special" title="Standing sweep">Rasteira em pé</button>
             <button class="special" title="Leg sweep front">Rasteira de fronte</button>
             <button class="special">Rasteira de fronte full</button>
             <button class="special" title="Leg sweep back">Rasteira de costas</button>
             <button class="special">Rasteira de costas full</button>
+            <button class="special" title="Standing sweep">Rasteira em pé</button>
           </div>
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="cartwheels" name="rd">
+          <input type="checkbox" id="cartwheels">
           <label class="tab-label" for="cartwheels">Cartwheels</label>
           <div class="tab-content">
             <button class="special" title="Cartwheel">Aú</button>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="acrobatics" name="rd">
+          <input type="checkbox" id="acrobatics">
           <label class="tab-label" for="acrobatics">Acrobatics</label>
           <div class="tab-content">
             <button class="special" title="Headspin">Pião de cabeça</button>
@@ -130,7 +130,7 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="sequences" name="rd">
+          <input type="checkbox" id="sequences">
           <label class="tab-label" for="sequences">Sequences</label>
           <div class="tab-content">
             <button class="special">Aú to Role</button>
@@ -141,7 +141,7 @@
         </div>
 
         <div class="tab">
-          <input type="checkbox" id="mma" name="rd">
+          <input type="checkbox" id="mma">
           <label class="tab-label" for="mma">MMA Kicks</label>
           <div class="tab-content">
             <button class="special">Mma <b>Chapa</b></button>
@@ -154,9 +154,8 @@
         </div>        
 
         <label class="random-wrapper"><input id="random-moves" type="checkbox"> Random moves</label>
-      </div>
+      </nav>
     </div>
-
   </div>
 
   <img id="preloader" src="assets/loading.gif">

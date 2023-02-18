@@ -61,7 +61,7 @@ document.getElementById('mirror').addEventListener('click', () =>
 document.addEventListener('keydown', e => {
   if (e.code == 'KeyC') toggleCamera()
   if (e.code == 'KeyM') mirrorModel()
-  if (e.code.includes('Arrow')) speed.focus()
+  if (e.code == ('ArrowLeft' || 'ArrowRight')) speed.focus()
 })
 
 /* HIDE PRELOADER */

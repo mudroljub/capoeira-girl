@@ -4,8 +4,14 @@ body {
   overflow: hidden;
 }
 
-button, input, label {
+button,
+input,
+label {
   cursor: pointer;
+}
+
+input:focus+label {
+  border: 1px solid yellow;
 }
 
 button:not(:disabled) b {
@@ -193,15 +199,17 @@ input:checked~.tab-content {
   opacity: 1;
   transform: rotate(45deg) translate(1px, 1px);
 }
+
 #burger-checkbox:checked~span:nth-last-child(3) {
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
+
 #burger-checkbox:checked~span:nth-last-child(2) {
   transform: rotate(-45deg) translate(1px, -1px);
 }
 
-#menu {
+#nav-wrapper {
   position: absolute;
   width: 300px;
   transform-origin: 0% 0%;
@@ -209,7 +217,7 @@ input:checked~.tab-content {
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 }
 
-#burger-checkbox:checked~#menu {
+#burger-checkbox:checked~#nav-wrapper {
   transform: none;
 }
 
