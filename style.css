@@ -11,7 +11,7 @@ label {
 }
 
 input:focus+label {
-  border: 1px solid yellow;
+  border: 1px solid #EDD59E;
 }
 
 button:not(:disabled) b {

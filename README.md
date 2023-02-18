@@ -12,5 +12,4 @@ Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com
 
 ## TODO
 
-- strelice gore dole da fokusiraju meni
 - možda obrnuti neke rasteira animacije
