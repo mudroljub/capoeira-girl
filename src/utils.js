@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import { FBXLoader } from 'three/addons/loaders/FBXLoader.js'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { FBXLoader } from 'https://unpkg.com/three@0.134.0/examples/jsm/loaders/FBXLoader.js'
+import { OrbitControls } from '../libs/OrbitControls.js'
 
 export const clock = new THREE.Clock()
 
