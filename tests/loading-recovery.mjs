@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { test } from 'node:test'
 import vm from 'node:vm'
 
-async function createApp({ failModel = false, failAnimation = false } = {}) {
+async function createApp({ failModel = false, failAnimation = false, wakeLock } = {}) {
   const elements = new Map()
   const listeners = new Map()
   const element = id => {
@@ -39,7 +39,7 @@ async function createApp({ failModel = false, failAnimation = false } = {}) {
     Date: class extends Date {
       static now() { return now }
     },
-    console: { error() {} },
+    console: { error() {}, warn() {} },
     document: {
       getElementById: element,
       querySelectorAll: selector => selector === '.special' ? [buttons[1]]
@@ -50,7 +50,7 @@ async function createApp({ failModel = false, failAnimation = false } = {}) {
       },
     },
     window: { location: { reload() { reloads++ } } },
-    navigator: {},
+    navigator: wakeLock ? { wakeLock } : {},
     requestAnimationFrame() { frames++ },
   })
   const dependencies = {
@@ -97,6 +97,9 @@ async function createApp({ failModel = false, failAnimation = false } = {}) {
     allowAnimations() { failAnimation = false },
     rejectAnimations() { failAnimation = true },
     advanceTime(milliseconds) { now += milliseconds },
+    async click() {
+      await Promise.all((listeners.get('click') ?? []).map(listener => listener()))
+    },
     keydown(code) {
       const event = { code, defaultPrevented: false, preventDefault() { this.defaultPrevented = true } }
       for (const listener of listeners.get('keydown') ?? []) listener(event)
@@ -212,6 +215,65 @@ for (const arrow of ['ArrowLeft', 'ArrowRight']) {
     assert.equal(app.keydown('ArrowLeft').defaultPrevented, false)
     assert.equal(app.keydown('ArrowRight').defaultPrevented, false)
     assert.equal(speed.focusCalls, 1)
+  })
+}
+
+test('clicks work when screen wake lock is unsupported', async () => {
+  const app = await createApp()
+  await app.load('../src/main.js')
+  await app.click()
+  assert.equal(app.element('loading-error').hidden, true)
+  assert.equal(app.element('preloader').style.display, 'none')
+})
+
+test('concurrent clicks request one wake lock and reuse it until released', async () => {
+  let requests = 0
+  let resolveRequest
+  const sentinel = { released: false }
+  const app = await createApp({ wakeLock: {
+    request(type) {
+      assert.equal(type, 'screen')
+      requests++
+      return new Promise(resolve => { resolveRequest = resolve })
+    },
+  } })
+  await app.load('../src/main.js')
+  const firstClick = app.click()
+  await app.click()
+  assert.equal(requests, 1)
+  resolveRequest(sentinel)
+  await firstClick
+  await app.click()
+  assert.equal(requests, 1)
+  sentinel.released = true
+  const nextClick = app.click()
+  assert.equal(requests, 2)
+  resolveRequest({ released: false })
+  await nextClick
+  await app.click()
+  assert.equal(requests, 2)
+})
+
+for (const failure of ['throw', 'reject']) {
+  test(`wake lock ${failure} is handled and a later click can retry`, async () => {
+    let requests = 0
+    const app = await createApp({ wakeLock: {
+      request() {
+        requests++
+        if (requests === 1) {
+          const error = new Error('Wake lock denied')
+          if (failure === 'throw') throw error
+          return Promise.reject(error)
+        }
+        return Promise.resolve({ released: false })
+      },
+    } })
+    await app.load('../src/main.js')
+    await app.click()
+    assert.equal(app.element('loading-error').hidden, true)
+    await app.click()
+    await app.click()
+    assert.equal(requests, 2)
   })
 }
 

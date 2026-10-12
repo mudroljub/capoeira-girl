@@ -12,7 +12,7 @@ Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com
 
 ## Tests
 
-Run the loading recovery, animation timing, and keyboard shortcut tests with Node.js:
+Run the loading recovery, animation timing, keyboard shortcut, and screen wake lock tests with Node.js:
 
 ```sh
 node --experimental-vm-modules --test tests/loading-recovery.mjs

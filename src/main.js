@@ -63,7 +63,20 @@ async function start() {
 
   document.getElementById('camera').addEventListener('click', toggleCamera)
 
-  document.addEventListener('click', () => navigator.wakeLock?.request('screen'))
+  let screenWakeLock
+  let wakeLockPending = false
+  document.addEventListener('click', async () => {
+    if (!navigator.wakeLock || wakeLockPending || (screenWakeLock && !screenWakeLock.released)) return
+
+    wakeLockPending = true
+    try {
+      screenWakeLock = await navigator.wakeLock.request('screen')
+    } catch (error) {
+      console.warn('Could not keep the screen awake:', error)
+    } finally {
+      wakeLockPending = false
+    }
+  })
 
   document.getElementById('mirror').addEventListener('click', () =>
     mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
