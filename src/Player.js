@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { loadFbxAnimations, sample, setButton } from './utils.js'
 import IdleState from './states/IdleState.js'
 import SpecialState from './states/SpecialState.js'
+import { showLoadingError, clearLoadingError } from './loadingError.js'
 
 const title = document.getElementById('title')
 const randomMoves = document.getElementById('random-moves')
@@ -60,19 +61,29 @@ export default class Player {
   async setState(name) {
     if (!this.actions[name]) {
       this.loading = true
-      const animation = await loadFbxAnimations([name])
-      this.actions[name] = this.mixer.clipAction(animation[0])
-      this.loading = false
+      try {
+        const animation = await loadFbxAnimations([name])
+        this.actions[name] = this.mixer.clipAction(animation[0])
+      } catch (error) {
+        console.error('Could not load animation:', name, error)
+        this.lastAnimTime = Date.now()
+        showLoadingError('Could not load this move. Select it again to retry.')
+        return false
+      } finally {
+        this.loading = false
+      }
     }
 
+    clearLoadingError()
     this.oldState = this.currentState
     if (this.oldState) {
-      if (this.oldState.name == name) return
+      if (this.oldState.name == name) return true
       this.oldState.exit()
     }
     const State = moves.includes(name) ? SpecialState : IdleState
     this.currentState = new State(this, name)
     this.currentState.enter(this.oldState)
+    return true
   }
 
   /* UPDATE */

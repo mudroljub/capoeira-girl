@@ -4,6 +4,21 @@ body {
   overflow: hidden;
 }
 
+#loading-error {
+  position: fixed;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 8px;
+  background: white;
+  color: #561217;
+  z-index: 3;
+}
+
 button,
 input,
 label {

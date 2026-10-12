@@ -10,4 +10,10 @@ Made with love and Three.js.
 
 Credits: *3D model is from rigmodels.com, and animations are from www.mixamo.com*.
 
-## TODO
+## Tests
+
+Run the loading recovery tests with Node.js:
+
+```sh
+node --experimental-vm-modules --test tests/loading-recovery.mjs
+```

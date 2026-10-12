@@ -1,70 +1,89 @@
 import * as THREE from 'three'
 import { scene, camera, renderer, controls, clock, loadFbx } from './utils.js'
 import Player from './Player.js'
+import { showLoadingError } from './loadingError.js'
 
-const speed = document.getElementById('speed')
-const checkboxes = document.querySelectorAll('.tab input')
-
-const defaultCameraPos = new THREE.Vector3(0, .9, 2.75)
-camera.position.copy(defaultCameraPos)
-
-const cameraTarget = new THREE.Vector3(0, defaultCameraPos.y, 0)
-controls.target = cameraTarget
-
-const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
-
-const player = new Player({ mesh })
-await player.setState('Ginga')
-
-scene.add(mesh)
-
-/* FUNCTIONS */
-
-const toggleCamera = () => {
-  const newZ = camera.position.z > 0 ? -defaultCameraPos.z * 1.2 : defaultCameraPos.z
-  const newY = camera.position.z > 0 ? defaultCameraPos.y * .75 : defaultCameraPos.y
-  camera.position.set(defaultCameraPos.x, newY, newZ)
-  cameraTarget.y = newY
+function showStartupError() {
+  document.getElementById('preloader').style.display = 'none'
+  document.querySelectorAll('.idle,.special').forEach(btn => { btn.disabled = true })
+  showLoadingError('Could not load the app. Please try again.', () => window.location.reload())
 }
 
-const mirrorModel = () => mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
+async function start() {
+  const speed = document.getElementById('speed')
+  const checkboxes = document.querySelectorAll('.tab input')
 
-const closeOthers = e => checkboxes.forEach(el => {
-  if (el !== e.target) el.checked = false
-})
+  const defaultCameraPos = new THREE.Vector3(0, .9, 2.75)
+  camera.position.copy(defaultCameraPos)
 
-/* LOOP */
+  const cameraTarget = new THREE.Vector3(0, defaultCameraPos.y, 0)
+  controls.target = cameraTarget
 
-void async function loop() {
-  requestAnimationFrame(loop)
-  const delta = clock.getDelta()
+  const { mesh } = await loadFbx({ file: 'assets/fbx/model.fbx', axis: [0, 1, 0], angle: Math.PI })
 
-  const speedPercent = Number(speed.value) / 100
-  await player.update(delta * speedPercent)
+  const player = new Player({ mesh })
+  if (!await player.setState('Ginga')) {
+    showStartupError()
+    return
+  }
 
-  controls.update()
-  renderer.render(scene, camera)
-}()
+  scene.add(mesh)
 
-/* EVENTS */
+  /* FUNCTIONS */
 
-checkboxes.forEach(el => el.addEventListener('change', closeOthers))
+  const toggleCamera = () => {
+    const newZ = camera.position.z > 0 ? -defaultCameraPos.z * 1.2 : defaultCameraPos.z
+    const newY = camera.position.z > 0 ? defaultCameraPos.y * .75 : defaultCameraPos.y
+    camera.position.set(defaultCameraPos.x, newY, newZ)
+    cameraTarget.y = newY
+  }
 
-document.getElementById('camera').addEventListener('click', toggleCamera)
+  const mirrorModel = () => mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
 
-document.addEventListener('click', () => navigator.wakeLock?.request('screen'))
+  const closeOthers = e => checkboxes.forEach(el => {
+    if (el !== e.target) el.checked = false
+  })
 
-document.getElementById('mirror').addEventListener('click', () =>
-  mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
-)
+  /* LOOP */
 
-document.addEventListener('keydown', e => {
-  if (e.code == 'KeyC') toggleCamera()
-  if (e.code == 'KeyM') mirrorModel()
-  if (e.code == ('ArrowLeft' || 'ArrowRight')) speed.focus()
-})
+  void async function loop() {
+    requestAnimationFrame(loop)
+    const delta = clock.getDelta()
 
-/* HIDE PRELOADER */
+    const speedPercent = Number(speed.value) / 100
+    await player.update(delta * speedPercent)
 
-document.getElementById('preloader').style.display = 'none'
-document.getElementById('title').innerHTML = ''
+    controls.update()
+    renderer.render(scene, camera)
+  }()
+
+  /* EVENTS */
+
+  checkboxes.forEach(el => el.addEventListener('change', closeOthers))
+
+  document.getElementById('camera').addEventListener('click', toggleCamera)
+
+  document.addEventListener('click', () => navigator.wakeLock?.request('screen'))
+
+  document.getElementById('mirror').addEventListener('click', () =>
+    mesh.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1))
+  )
+
+  document.addEventListener('keydown', e => {
+    if (e.code == 'KeyC') toggleCamera()
+    if (e.code == 'KeyM') mirrorModel()
+    if (e.code == ('ArrowLeft' || 'ArrowRight')) speed.focus()
+  })
+
+  /* HIDE PRELOADER */
+
+  document.getElementById('preloader').style.display = 'none'
+  document.getElementById('title').innerHTML = ''
+}
+
+try {
+  await start()
+} catch (error) {
+  console.error('Could not start the app:', error)
+  showStartupError()
+}
