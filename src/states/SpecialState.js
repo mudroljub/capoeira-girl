@@ -44,6 +44,6 @@ export default class SpecialState extends State {
     this._Cleanup()
     title.innerHTML = ''
     buttons.forEach(btn => setButton(btn, false))
-    this.player.lastAnimTime = Date.now()
+    this.player.timeSinceLastMove = 0
   }
 }

@@ -5,10 +5,15 @@ import vm from 'node:vm'
 
 async function createApp({ failModel = false, failAnimation = false } = {}) {
   const elements = new Map()
+  const listeners = new Map()
   const element = id => {
     if (!elements.has(id)) elements.set(id, {
       hidden: true, style: {}, checked: false, value: '100',
-      addEventListener() {}, focus() {},
+      addEventListener() {}, focusCalls: 0,
+      focus() {
+        this.focusCalls++
+        context.document.activeElement = this
+      },
     })
     return elements.get(id)
   }
@@ -18,6 +23,7 @@ async function createApp({ failModel = false, failAnimation = false } = {}) {
   const requests = []
   let reloads = 0
   let frames = 0
+  let now = Date.now()
   class AnimationMixer {
     update() {}
     addEventListener() {}
@@ -30,12 +36,18 @@ async function createApp({ failModel = false, failAnimation = false } = {}) {
     }
   }
   const context = vm.createContext({
+    Date: class extends Date {
+      static now() { return now }
+    },
     console: { error() {} },
     document: {
       getElementById: element,
       querySelectorAll: selector => selector === '.special' ? [buttons[1]]
         : selector === '.tab input' ? [] : buttons,
-      addEventListener() {},
+      addEventListener(type, listener) {
+        if (!listeners.has(type)) listeners.set(type, [])
+        listeners.get(type).push(listener)
+      },
     },
     window: { location: { reload() { reloads++ } } },
     navigator: {},
@@ -84,6 +96,12 @@ async function createApp({ failModel = false, failAnimation = false } = {}) {
     load, element, buttons, requests,
     allowAnimations() { failAnimation = false },
     rejectAnimations() { failAnimation = true },
+    advanceTime(milliseconds) { now += milliseconds },
+    keydown(code) {
+      const event = { code, defaultPrevented: false, preventDefault() { this.defaultPrevented = true } }
+      for (const listener of listeners.get('keydown') ?? []) listener(event)
+      return event
+    },
     get reloads() { return reloads }, get frames() { return frames },
   }
 }
@@ -118,13 +136,84 @@ test('failed automatic move waits before retrying instead of requesting every fr
   const player = new Player({ mesh: {} })
   await player.setState('Ginga')
   app.element('random-moves').checked = true
-  player.lastAnimTime = Date.now() - 7000
+  await player.update(4)
+  app.advanceTime(4000)
   app.rejectAnimations()
-  await player.update(0.016)
+  await player.update(3)
   await player.update(0.016)
   assert.deepEqual(app.requests, ['Ginga', 'Ponteira'])
   assert.equal(player.isReady, true)
 })
+
+test('random moves preserve the remaining interval across a long pause', async () => {
+  const app = await createApp()
+  const { default: Player } = await app.load('../src/Player.js')
+  const player = new Player({ mesh: {} })
+  await player.setState('Ginga')
+  app.element('random-moves').checked = true
+  app.advanceTime(4000)
+  await player.update(4)
+  app.advanceTime(10000)
+  await player.update(0)
+  await player.update(0)
+  assert.deepEqual(app.requests, ['Ginga'])
+  assert.equal(player.timeSinceLastMove, 4)
+  await player.update(1.9)
+  assert.deepEqual(app.requests, ['Ginga'])
+  await player.update(0.2)
+  assert.equal(player.currentState.name, 'Ponteira')
+  assert.deepEqual(app.requests, ['Ginga', 'Ponteira'])
+})
+
+test('replay countdown freezes while paused and resets after the move', async () => {
+  const app = await createApp()
+  const { default: Player } = await app.load('../src/Player.js')
+  const player = new Player({ mesh: {} })
+  await player.setState('Ginga')
+  await player.setState('Ponteira')
+  await player.update(2)
+  await player.setState('Ginga')
+  assert.equal(player.timeSinceLastMove, 0)
+  app.advanceTime(3100)
+  await player.update(3.1)
+  assert.equal(app.element('title').innerHTML, 3)
+  app.advanceTime(10000)
+  await player.update(0)
+  assert.equal(app.element('title').innerHTML, 3)
+  assert.equal(player.currentState.name, 'Ginga')
+  await player.update(1)
+  assert.equal(app.element('title').innerHTML, 2)
+  await player.update(2)
+  assert.equal(player.currentState.name, 'Ponteira')
+})
+
+test('automatic moves follow animation time at reduced speed', async () => {
+  const app = await createApp()
+  const { default: Player } = await app.load('../src/Player.js')
+  const player = new Player({ mesh: {} })
+  await player.setState('Ginga')
+  app.element('random-moves').checked = true
+  app.advanceTime(7000)
+  await player.update(7 * 0.5)
+  assert.deepEqual(app.requests, ['Ginga'])
+  await player.update(5.2 * 0.5)
+  assert.equal(player.currentState.name, 'Ponteira')
+})
+
+for (const arrow of ['ArrowLeft', 'ArrowRight']) {
+  test(`${arrow} focuses speed and leaves native arrow handling available`, async () => {
+    const app = await createApp()
+    await app.load('../src/main.js')
+    const speed = app.element('speed')
+    assert.equal(app.keydown('ArrowUp').defaultPrevented, false)
+    assert.equal(speed.focusCalls, 0)
+    assert.equal(app.keydown(arrow).defaultPrevented, false)
+    assert.equal(speed.focusCalls, 1)
+    assert.equal(app.keydown('ArrowLeft').defaultPrevented, false)
+    assert.equal(app.keydown('ArrowRight').defaultPrevented, false)
+    assert.equal(speed.focusCalls, 1)
+  })
+}
 
 for (const failure of ['model', 'animation']) {
   test(`initial ${failure} failure hides the spinner and offers a retry`, async () => {

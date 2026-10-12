@@ -72,7 +72,8 @@ async function start() {
   document.addEventListener('keydown', e => {
     if (e.code == 'KeyC') toggleCamera()
     if (e.code == 'KeyM') mirrorModel()
-    if (e.code == ('ArrowLeft' || 'ArrowRight')) speed.focus()
+    if ((e.code == 'ArrowLeft' || e.code == 'ArrowRight') && document.activeElement !== speed)
+      speed.focus()
   })
 
   /* HIDE PRELOADER */

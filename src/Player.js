@@ -17,7 +17,7 @@ export default class Player {
     this.mesh = mesh
     this.mixer = new THREE.AnimationMixer(mesh)
     this.actions = {}
-    this.lastAnimTime = Date.now()
+    this.timeSinceLastMove = 0
     this.interval = 6 // seconds
 
     buttons.forEach(btn => btn.addEventListener('click', e => {
@@ -48,10 +48,6 @@ export default class Player {
     return moves.includes(this.oldState?.name)
   }
 
-  get timeSinceLastMove() {
-    return (Date.now() - this.lastAnimTime) / 1000
-  }
-
   get shouldReplay() {
     return !randomMoves.checked && this.hasPrevMove
   }
@@ -66,7 +62,7 @@ export default class Player {
         this.actions[name] = this.mixer.clipAction(animation[0])
       } catch (error) {
         console.error('Could not load animation:', name, error)
-        this.lastAnimTime = Date.now()
+        this.timeSinceLastMove = 0
         showLoadingError('Could not load this move. Select it again to retry.')
         return false
       } finally {
@@ -103,6 +99,9 @@ export default class Player {
   }
 
   async update(delta) {
+    if (delta <= 0) return
+
+    this.timeSinceLastMove += delta
     this.currentState?.update()
 
     if (this.shouldReplay) this.countdown()
