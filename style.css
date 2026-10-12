@@ -96,7 +96,10 @@ button:not(:disabled) b {
 
 .tabs {
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: calc(100vh - 84px);
+  max-height: calc(100dvh - 84px);
   box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
   max-width: 220px;
   position: absolute;
@@ -158,7 +161,7 @@ input:checked+.tab-label::after {
 }
 
 input:checked~.tab-content {
-  max-height: 100vh;
+  max-height: none;
 }
 
 /* BURGER MENU */
@@ -226,6 +229,7 @@ input:checked~.tab-content {
 
 #nav-wrapper {
   position: absolute;
+  top: 24px;
   width: 300px;
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
@@ -239,5 +243,14 @@ input:checked~.tab-content {
 @media (min-width: 800px) {
   #toggle-menu span {
     display: none;
+  }
+
+  #nav-wrapper {
+    top: 0;
+  }
+
+  .tabs {
+    max-height: calc(100vh - 60px);
+    max-height: calc(100dvh - 60px);
   }
 }
